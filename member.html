@@ -1,0 +1,378 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>党员管理</title>
+<!-- custom-theme -->
+<meta name="baidu-site-verification" content="z8EeuYl0nS" />
+<meta name="keywords" content="西安交通大学人居学院">
+<meta name="description" content="西安交通大学人居学院">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+<link href="css/basic.css" rel="stylesheet" type="text/css"/>
+<link href="css/style.css" rel="stylesheet" type="text/css"/>
+<link href="css/responsive.css" rel="stylesheet" type="text/css"/>
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<link href="css/font-awesome.min.css" rel="stylesheet">
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<script src="js/rem.js"></script>
+
+<!--[if IE 9]>
+ <style>
+    .animatedOpacity{
+        opacity:1;
+        }
+    .sort_in{
+    margin-top:0.3rem;
+    }
+ </style>
+<![endif]-->
+</head>
+<body style="background:#f5f5f5;">
+<div id="app">
+    <header>
+        <div class="navigation fixed-top bg">
+          <div class="navigation_box contain">
+             <div class="navigation_left flex">
+                 <a href="index.html"><img src="images/logo.jpg" class="img-responsive"></a>
+             </div>
+             <div class="nav_toggle hidden-this" @click="toggleMenu">
+                 <img src="images/nav.png" />
+             </div>
+             <div class="navigation_right" id="computer">
+                 <ul class="navigate">
+                   <li><a href="index.html">工作室风采</a></li>
+                    <li><a href="news.html">新闻动态</a></li>
+                    <li><a href="organization.html">组织活动</a></li>
+                    <li><a href="member.html" class="active">党员管理</a></li>
+                    <li><a href="member_manager.html">党员管理员</a></li>
+                </ul>
+             </div>
+             <div class="navigation_right orgin" :class="(is_toggle?'after':'')" id="phone">
+                 <ul class="navigate">
+                    <li><a href="index.html">工作室风采</a></li>
+                    <li><a href="news.html">新闻动态</a></li>
+                    <li><a href="organization.html">组织活动</a></li>
+                    <li><a href="member.html" class="active">党员管理</a></li>
+                    <li><a href="member_manager.html">党员管理员</a></li>
+                </ul>
+             </div>
+          </div>  
+        </div>
+    </header>
+    <div class="banner2">
+        <img src="images/banner1.jpg" class="img-responsive"/>
+    </div>
+    <div style="width:100%;height:0.9rem;"></div>
+    <div class="member">
+        <div class="contain">
+            <div class="member_left bg1">
+                <h3 class="bg font20 color1"><span>管理员</span></h3>
+               <div class="member_bottom">
+                    <div class="font18 color sort">
+                        <a  href="member.html">基本信息</a>  
+                    </div>
+                    <div class="font18 color sort">
+                        <a href="member_notice.html">公告通知</a>
+                        <ul :style="is_menu == 1&&menuShow?'height:auto':'height:0'">
+                            <li class="font16 color6" data-text="未阅读" @click="read">未阅读</li>
+                            <li class="font16 color6" data-text="已阅读" @click="read">已阅读</li>
+                        </ul>
+                    </div>
+                    <div class="font18 color sort">
+                        <a href="member_meeting.html">会议通知</a>
+                          <ul :style="is_menu == 2&&menuShow?'height:auto':'height:0'">
+                            <li class="font16 color6" data-text="最近通知" @click="read">最近通知</li>
+                            <li class="font16 color6" data-text="最新通知" @click="read">最新通知</li>
+                        </ul>
+                    </div>
+                    <div class="font18 color sort">
+                        <a href="member_task.html">任务中心</a>
+                          <ul :style="is_menu == 3&&menuShow?'height:auto':'height:0'">
+                            <li class="font16 color6" data-text="最新任务" @click="read">最新任务</li>
+                            <li class="font16 color6" data-text="未完成" @click="read">未完成</li>
+                            <li class="font16 color6" data-text="迟交" @click="read">迟交</li>
+                            <li class="font16 color6" data-text="按时完成" @click="read">按时完成</li>
+                        </ul>
+                    </div>
+                    <div class="font18 color sort">
+                        <a href="member_report.html">思想汇报</a>
+                          <ul :style="is_menu == 4&&menuShow?'height:auto':'height:0'">
+                            <li class="font16 color6" data-text="最新任务" @click="report">最新任务</li>
+                            <li class="font16 color6" data-text="未完成" @click="report">未完成</li>
+                            <li class="font16 color6" data-text="迟交" @click="report">迟交</li>
+                            <li class="font16 color6" data-text="按时完成" @click="report">按时完成</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="member_right" :style="is_menu==0?'display:block':'display:none'">
+                <div class="bg1" style="box-shadow:0 0 20px #f8f8f8;">
+                    <div class="member_list">
+                        <p class="font20 color2">姓名:</p>
+                        <input placeholder="请输入姓名" />
+                    </div>
+                    <div class="member_list">
+                        <p class="font20 color2">电话:</p>
+                        <input placeholder="请输入电话" />
+                    </div>
+                    <div class="member_list">
+                        <p class="font20 color2">Email:</p>
+                        <input placeholder="请输入邮箱" />
+                    </div>
+                    <div class="member_list">
+                        <p class="font20 color2">性别:</p>
+                        <div class="input">
+                            <div class="boy flex">
+                                    <label  data-text="男" @click="gender">男</label>
+                                    <img :src="(submitData.userGender=='男'?'images/select_a.png':'images/select.png')" data-text="男" @click="gender"/>
+                                </div>
+                                <div class="boy flex">
+                                    <label data-text="女"  @click="gender">女</label>
+                                    <img :src="(submitData.userGender=='女'?'images/select_a.png':'images/select.png')" data-text="女" @click="gender"/>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="member_list">
+                        <p class="font20 color2">出生日期:</p>
+                        <input type="date" value="2018-09-1" style="height:0.4rem;margin-top:0.2rem;" />
+                    </div>
+                    <div class="member_list">
+                        <p class="font20 color2">身份:</p>
+                        <select>
+                            <option>中共党员</option>
+                            <option>积极分子</option>
+                        </select>
+                    </div>
+                    <div class="member_list">
+                        <p class="font20 color2">职称:</p>
+                        <select>
+                            <option>教授</option>
+                            <option>副教授</option>
+                        </select>
+                    </div>
+                    <div class="member_list">
+                        <p class="font20 color2">入党日期:</p>
+                        <input type="date" value="2018-09-1" style="height:0.4rem;margin-top:0.2rem;" />
+                    </div>
+                </div>
+                <button class="bg color1 font20">确认修改</button>
+            </div>
+            <div class="member_right" :style="is_menu==1?'display:block':'display:none'">
+                <div :style="is_read == '未阅读'?'display:block':'display:none'">
+                    <div class="message_list bg1">
+                        <div class="marks bg font12">未阅读</div>
+                        <div  class="message_left">
+                            <h3 class="font20 color2">标题标题标题标题标题标题标题标题</h3>
+                            <p class="font16 color6">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内容内容内容容内容内容内容内容</p>
+                            <span class="color9 font14">2018-09-19</span>
+                        </div>
+                        <div class="message_right">
+                            <img src="images/img2.jpg"/>
+                        </div>
+                    </div>
+                </div>
+                 <div :style="is_read == '已阅读'?'display:block':'display:none'">
+                    <div class="message_list bg1">
+                        <div  class="message_left">
+                            <h3 class="font20 color2">标题标题标题标题标题标题标题标题</h3>
+                            <p class="font16 color6">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内容让女人内容内容内容内容内容内容内容内容容内容内容内容内容</p>
+                            <span class="color9 font14">2018-09-19</span>
+                        </div>
+                        <div class="message_right">
+                            <img src="images/img2.jpg"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="member_right" :style="is_menu==2?'display:block':'display:none'">
+                <div :style="is_read == '最近通知'?'display:block':'display:none'">
+                    <div class="message_list bg1" style="height:2.6rem;">
+                        <div  class="message_left">
+                            <h3 class="font20 color2">标题标题标题标题标题标题标题标题</h3>
+                            <p class="font16 color6">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内容内容内容容内容内容内容内容</p>
+                            <span class="color9 font14">2018-09-19</span>
+                        </div>
+                        <div class="message_right">
+                            <img src="images/img2.jpg"/>
+                        </div>
+                        <div class="join" :style="is_attend?'display:none':'display:block'">
+                            <button class="font16 color1 bg">确认参加</button>
+                            <button class="font16 color1 bg" @click="attend">无法参加</button>
+                        </div>
+                    </div>
+                </div>
+                 <div :style="is_read == '最新通知'?'display:block':'display:none'">
+                    <div class="message_list bg1"  style="height:2.6rem;">
+                        <div  class="message_left">
+                            <h3 class="font20 color2">标题标题标题标题标题标题标题标题</h3>
+                            <p class="font16 color6">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内容让女人内容内容内容内容内容内容内容内容容内容内容内容内容</p>
+                            <span class="color9 font14">2018-09-19</span>
+                        </div>
+                        <div class="message_right">
+                            <img src="images/img2.jpg"/>
+                        </div>
+                        <div class="join">
+                            <button class="font16 color1 bg">确认参加</button>
+                            <button class="font16 color1 bg" @click="attend">无法参加</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="attend" :style="is_attend?'display:block':'display:none'">
+                    <div class="textarea">
+                        <textarea placeholder="编辑文案"></textarea>
+                    </div>
+                    <div class="join">
+                        <button class="font16 color1 bg"  style="width:4rem;height:0.4rem;line-height:0.4rem;margin-top:1rem;margin-bottom: 0.5rem;">提交</button>
+                    </div>
+                </div>
+            </div>
+            <div class="member_right" :style="is_menu==3?'display:block':'display:none'">
+                <div :style="is_read == '最新任务'?'display:block':'display:none'">
+                    <div class="message_list bg1" style="height:2.6rem;">
+                        <div class="marks bg font12">最新</div>
+                        <div  class="message_left" style="width:100%">
+                            <h3 class="font20 color2">标题标题标题标题标题标题标题标题</h3>
+                            <p class="font16 color6">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内容内容内容容内容内容内容内容</p>
+                        </div>
+                        <div class="join">
+                            <button class="font16 color1 bg" @click="submit" style="width:4rem;height:0.4rem;line-height:0.4rem;">提交</button>
+                        </div>
+                    </div>
+                </div>
+                 <div :style="is_read == '未完成'?'display:block':'display:none'">
+                    <div class="message_list bg1"  style="height:2.6rem;">
+                        <div  class="message_left" style="width:100%">
+                            <h3 class="font20 color2">标题标题标题标题标题标题标题标题</h3>
+                            <p class="font16 color6">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内容让女人内容内容内容内容内容内容内容内容容内容内容内容内容</p>
+                        </div>
+                        <div class="join">
+                            <button class="font16 color1 bg" @click="submit"  style="width:4rem;height:0.4rem;line-height:0.4rem;">提交</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="member_right" :style="is_menu==4?'display:block':'display:none'">
+                <div :style="is_report == '最新任务'?'display:block':'display:none'">
+                    <div class="message_list bg1" style="height:2.6rem;">
+                        <div class="marks bg font12">最新</div>
+                        <div  class="message_left" style="width:100%">
+                            <div class="message_time">
+                                <span class="font14 color6">发布任务时间：2018-6-9</span>
+                                <span class="font14 color6">完成任务时间：2018-6-9</span>
+                            </div>
+                            <h3 class="font20 color2">标题标题标题标题标题标题标题标题</h3>
+                            <p class="font16 color6" style="height:0.8rem">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内容内容内容容内容内容内容内容</p>
+                        </div>
+                        <div class="join">
+                            <button class="font16 color1 bg"  style="width:4rem;height:0.4rem;line-height:0.4rem;" @click="submit">提交</button>
+                        </div>
+                    </div>
+                </div>
+                 <div :style="is_report == '未完成'?'display:block':'display:none'">
+                    <div class="message_list bg1"  style="height:2.6rem;">
+                        <div class="message_time">
+                                <span class="font14 color6">发布任务时间：2018-6-9</span>
+                                <span class="font14 color6">完成任务时间：2018-6-9</span>
+                            </div>
+                            <h3 class="font20 color2">标题标题标题标题标题标题标题标题</h3>
+                            <p class="font16 color6" style="height:0.8rem">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内容内容内容容内容内容内容内容</p>
+                        <div class="join">
+                            <button class="font16 color1 bg"  style="width:4rem;height:0.4rem;line-height:0.4rem;">提交</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="member_right bg1" :style="is_menu == 999?'display:block':'display:none'">
+                <div class="upload_url">
+                    <img src="images/upload.jpg" />
+                    <span class="font16 color6">上传链接</span>
+                </div>
+                <div class="textarea">
+                    <textarea placeholder="编辑文案"></textarea>
+                </div>
+                <div class="upload">
+                    <div class="upload_item font16 color6">
+                        <!-- <input placeholder="上传照片"  type="file" /> -->
+                        上传照片
+                    </div>
+                </div>
+                <div class="join">
+                    <button class="font16 color1 bg"  style="width:4rem;height:0.4rem;line-height:0.4rem;margin-top:1rem;margin-bottom: 0.5rem;">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript " src="js/bootstrap.js"></script>
+<script src="js/jquery.waypoints.min.js"></script>
+<script src="js/my.js"></script>
+<script src="js/rem.js"></script>
+<script type="text/javascript">
+var app = new Vue({
+    el: '#app',
+    data: function() {
+        return {
+            is_toggle:false,
+            is_menu:0,
+            is_attend:false,
+            is_read:'未阅读',
+            is_report:'最新任务',
+            menuShow:false,
+            submitData:{
+                userGender:'男'
+            }
+        }
+    },
+    created: function () {
+      
+    },
+    methods:{
+        toggleMenu:function(e){
+            var self = this;
+            self.is_toggle = !self.is_toggle;
+        },
+        gender(e){
+            const self = this;
+            var dataSet = window.base.getDataSet(e);
+            self.submitData.userGender = dataSet.text;
+            console.log(909,self.submitData.userGender);
+        },
+        read(e){
+            const self = this;
+            var dataSet = window.base.getDataSet(e);
+            self.is_read = dataSet.text;
+            self.is_attend = false;
+            console.log('is_read',self.is_read);
+        },
+        report(e){
+            const self = this;
+            var dataSet = window.base.getDataSet(e);
+            self.is_report = dataSet.text;
+        },
+        menu_show(id){
+            const self = this;
+            var index = id;
+            self.is_menu = index;
+            self.menuShow = !self.menuShow;
+            console.log('menuShow',self.menuShow);
+        },
+        attend(){
+            const self = this;
+            self.is_attend = true;
+        },
+        submit(){
+            const self = this;
+            self.is_menu = 999;
+            console.log('is_menu',self.is_menu);
+        }
+    }
+});
+</script>
+</body>
+</html>
