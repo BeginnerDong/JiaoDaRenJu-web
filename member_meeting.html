@@ -38,7 +38,7 @@
         <div class="navigation fixed-top bg">
           <div class="navigation_box contain">
              <div class="navigation_left flex">
-                 <a href="index.html"><img src="images/logo.jpg" class="img-responsive"></a>
+                 <a href="index.html"><img src="images/logo.png" class="img-responsive"></a>
              </div>
              <div class="nav_toggle hidden-this" @click="toggleMenu">
                  <img src="images/nav.png" />
@@ -80,7 +80,7 @@
                         <a href="member_notice.html">公告通知</a>
                     </div>
                     <div class="font18 color sort">
-                        <a href="member_meeting.html">会议通知</a>
+                        <a href="member_meeting.html" class="active">会议通知</a>
                           <ul>
                             <li class="font16 color6" :style="is_read == '最近通知'?'border:solid 1px #b02923':''" data-text="最近通知" @click="read">最近通知</li>
                             <li class="font16 color6" :style="is_read == '最新通知'?'border:solid 1px #b02923':''" data-text="最新通知" @click="read">最新通知</li>
@@ -105,9 +105,9 @@
                         <div class="message_right">
                             <img src="images/img2.jpg"/>
                         </div>
-                        <div class="join" :style="is_attend?'display:none':'display:block'">
+                        <div class="join">
                             <button class="font16 color1 bg">确认参加</button>
-                            <button class="font16 color1 bg" @click="attend">无法参加</button>
+                            <a href="member_meeting_submit.html" class="font16 color1 bg">无法参加</a>
                         </div>
                     </div>
                 </div>
@@ -123,19 +123,10 @@
                         </div>
                         <div class="join">
                             <button class="font16 color1 bg">确认参加</button>
-                            <button class="font16 color1 bg" @click="attend">无法参加</button>
+                            <a href="member_meeting_submit.html" class="font16 color1 bg">无法参加</a>
                         </div>
                     </div>
-                </div>
-                <div class="attend" :style="is_attend?'display:block':'display:none'">
-                    <div class="textarea">
-                        <textarea placeholder="编辑文案"></textarea>
-                    </div>
-                    <div class="join">
-                        <button class="font16 color1 bg"  style="width:4rem;height:0.4rem;line-height:0.4rem;margin-top:1rem;margin-bottom: 0.5rem;">提交</button>
-                    </div>
-                </div>
-            </div>
+                </div> 
         </div>
     </div>
 </div>
@@ -151,7 +142,6 @@ var app = new Vue({
         return {
             is_toggle:false,
             is_menu:0,
-            is_attend:false,
             is_read:'最近通知',
             menuShow:false,
         }

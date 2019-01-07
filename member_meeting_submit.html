@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>公告通知</title>
+<title>党员管理</title>
 <!-- custom-theme -->
 <meta name="baidu-site-verification" content="z8EeuYl0nS" />
 <meta name="keywords" content="西安交通大学人居学院">
@@ -77,14 +77,14 @@
                         <a @click="menu_show(0)" href="member.html">基本信息</a>  
                     </div>
                     <div class="font18 color sort">
-                        <a href="member_notice.html" class="active">公告通知</a>
-                        <ul>
-                            <li class="font16 color6" :style="is_read == '未阅读'?'border:solid 1px #b02923':''" data-text="未阅读" @click="read">未阅读</li>
-                            <li class="font16 color6" :style="is_read == '已阅读'?'border:solid 1px #b02923':''" data-text="已阅读" @click="read">已阅读</li>
-                        </ul>
+                        <a href="member_notice.html">公告通知</a>
                     </div>
                     <div class="font18 color sort">
-                        <a href="member_meeting.html">会议通知</a>
+                        <a href="member_meeting.html" class="active">会议通知</a>
+                          <ul>
+                            <li class="font16 color6" :style="is_read == '最近通知'?'border:solid 1px #b02923':''" data-text="最近通知" @click="read">最近通知</li>
+                            <li class="font16 color6" :style="is_read == '最新通知'?'border:solid 1px #b02923':''" data-text="最新通知" @click="read">最新通知</li>
+                        </ul>
                     </div>
                     <div class="font18 color sort">
                         <a href="member_task.html">任务中心</a>
@@ -95,29 +95,12 @@
                 </div>
             </div>
             <div class="member_right">
-                <div :style="is_read == '未阅读'?'display:block':'display:none'">
-                    <div class="message_list bg1">
-                        <div class="marks bg font12">未阅读</div>
-                        <div  class="message_left">
-                            <h3 class="font20 color2">标题标题标题标题标题标题标题标题</h3>
-                            <p class="font16 color6">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内容内容内容容内容内容内容内容</p>
-                            <span class="color9 font14">2018-09-19</span>
-                        </div>
-                        <div class="message_right">
-                            <img src="images/img2.jpg"/>
-                        </div>
+                <div class="attend">
+                    <div class="textarea">
+                        <textarea placeholder="编辑文案"></textarea>
                     </div>
-                </div>
-                 <div :style="is_read == '已阅读'?'display:block':'display:none'">
-                    <div class="message_list bg1">
-                        <div  class="message_left">
-                            <h3 class="font20 color2">标题标题标题标题标题标题标题标题</h3>
-                            <p class="font16 color6">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内容让女人内容内容内容内容内容内容内容内容容内容内容内容内容</p>
-                            <span class="color9 font14">2018-09-19</span>
-                        </div>
-                        <div class="message_right">
-                            <img src="images/img2.jpg"/>
-                        </div>
+                    <div class="join">
+                        <button class="font16 color1 bg"  style="width:4rem;height:0.4rem;line-height:0.4rem;margin-top:1rem;margin-bottom: 0.5rem;">提交</button>
                     </div>
                 </div>
             </div>
@@ -136,8 +119,7 @@ var app = new Vue({
         return {
             is_toggle:false,
             is_menu:0,
-            is_attend:false,
-            is_read:'未阅读',
+            is_read:'最近通知',
             menuShow:false,
         }
     },
@@ -159,6 +141,12 @@ var app = new Vue({
             const self = this;
             var dataSet = window.base.getDataSet(e);
             self.is_read = dataSet.text;
+            console.log('is_read',self.is_read);
+        },
+        report(e){
+            const self = this;
+            var dataSet = window.base.getDataSet(e);
+            self.is_report = dataSet.text;
         },
         menu_show(id){
             const self = this;

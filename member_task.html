@@ -31,7 +31,7 @@
         <div class="navigation fixed-top bg">
           <div class="navigation_box contain">
              <div class="navigation_left flex">
-                 <a href="index.html"><img src="images/logo.jpg" class="img-responsive"></a>
+                 <a href="index.html"><img src="images/logo.png" class="img-responsive"></a>
              </div>
              <div class="nav_toggle hidden-this" @click="toggleMenu">
                  <img src="images/nav.png" />
@@ -99,7 +99,7 @@
                             <p class="font16 color6">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内容内容内容容内容内容内容内容</p>
                         </div>
                         <div class="join">
-                            <button class="font16 color1 bg" @click="submit" style="width:4rem;height:0.4rem;line-height:0.4rem;">提交</button>
+                            <a href="member_task_upload.html" class="font16 color1 bg" @click="submit" style="width:4rem;height:0.4rem;line-height:0.4rem;">提交</a >
                         </div>
                     </div>
                 </div>
@@ -110,28 +110,9 @@
                             <p class="font16 color6">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内容让女人内容内容内容内容内容内容内容内容容内容内容内容内容</p>
                         </div>
                         <div class="join">
-                            <button class="font16 color1 bg" @click="submit"  style="width:4rem;height:0.4rem;line-height:0.4rem;">提交</button>
+                            <a  href="member_task_upload.html" class="font16 color1 bg" @click="submit"  style="width:4rem;height:0.4rem;line-height:0.4rem;">提交</a>
                         </div>
                     </div>
-                </div>
-            </div>
-             
-            <div class="member_right bg1" :style="is_menu == 999?'display:block':'display:none'">
-                <div class="upload_url">
-                    <img src="images/upload.jpg" />
-                    <span class="font16 color6">上传链接</span>
-                </div>
-                <div class="textarea">
-                    <textarea placeholder="编辑文案"></textarea>
-                </div>
-                <div class="upload">
-                    <div class="upload_item font16 color6">
-                        <!-- <input placeholder="上传照片"  type="file" /> -->
-                        上传照片
-                    </div>
-                </div>
-                <div class="join">
-                    <button class="font16 color1 bg"  style="width:4rem;height:0.4rem;line-height:0.4rem;margin-top:1rem;margin-bottom: 0.5rem;">提交</button>
                 </div>
             </div>
         </div>
@@ -149,7 +130,6 @@ var app = new Vue({
         return {
             is_toggle:false,
             is_menu:0,
-            is_attend:false,
             is_read:'最新任务',
             menuShow:false,
         }
@@ -172,14 +152,8 @@ var app = new Vue({
             const self = this;
             var dataSet = window.base.getDataSet(e);
             self.is_read = dataSet.text;
-            self.is_attend = false;
             self.is_menu = 0,
             console.log('is_read',self.is_read);
-        },
-        report(e){
-            const self = this;
-            var dataSet = window.base.getDataSet(e);
-            self.is_report = dataSet.text;
         },
         menu_show(id){
             const self = this;
@@ -187,10 +161,6 @@ var app = new Vue({
             self.is_menu = index;
             self.menuShow = !self.menuShow;
             console.log('menuShow',self.menuShow);
-        },
-        attend(){
-            const self = this;
-            self.is_attend = true;
         },
         submit(){
             const self = this;
