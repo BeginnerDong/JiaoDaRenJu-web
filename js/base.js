@@ -23,7 +23,7 @@ window.base={
         });
     },
 
-    articleList:function(param,callback) {
+    articleGet:function(param,callback) {
   
         var allParams = {
             url:'Common/Article/get',
@@ -35,6 +35,7 @@ window.base={
         };
         this.getData(allParams)
     },
+
     labelGet:function(param,callback) {
   
         var allParams = {
@@ -47,10 +48,24 @@ window.base={
         };
         this.getData(allParams)
     },
+
     messageAdd:function(param,callback) {
   
         var allParams = {
             url:'Common/Message/add',
+            type:'post',
+            data:param,
+            sCallback: function(data){
+                callback&&callback(data);
+            }
+        };
+        this.getData(allParams)
+    },
+
+    messageUpdate:function(param,callback) {
+  
+        var allParams = {
+            url:'Common/Message/update',
             type:'post',
             data:param,
             sCallback: function(data){
@@ -71,6 +86,7 @@ window.base={
         };
         return new_array; 
     },
+
     articleOne:function(param,callback) {
         var allParams = {
             url:'UserArticle/GetInfo',
@@ -83,65 +99,7 @@ window.base={
         this.getData(allParams)
     },
 
-    menuOne:function(param,callback) {
-        var allParams = {
-            url:'UserMenu/GetInfo',
-            type:'post',
-            data:param,
-            sCallback: function(data){
-                callback&&callback(data);
-            }
-        };
-        this.getData(allParams)
-    },
-
-    themeList:function(param,callback) {
-        var allParams = {
-            url:'UserContent/GetList',
-            type:'post',
-            data:param,
-            sCallback: function(data){
-                callback&&callback(data);
-            }
-        };
-        this.getData(allParams)
-    },
-
-    themeOne:function(param,callback) {
-        var allParams = {
-            url:'UserContent/GetInfo',
-            type:'post',
-            data:param,
-            sCallback: function(data){
-                callback&&callback(data);
-            }
-        };
-        this.getData(allParams)
-    },
-
-    themeNum:function(param,callback) {
-        var allParams = {
-            url:'UserContent/GetHomeTheme',
-            type:'post',
-            data:param,
-            sCallback: function(data){
-                callback&&callback(data);
-            }
-        };
-        this.getData(allParams)
-    },
-
-    categoryTree:function(param,callback) {
-        var allParams = {
-            url:'UserCategory/GetTree',
-            type:'post',
-            data:param,
-            sCallback: function(data){
-                callback&&callback(data);
-            }
-        };
-        this.getData(allParams)
-    },
+    
 
     cloneForm:function(form) {
         var res =  JSON.parse(JSON.stringify(form));   
