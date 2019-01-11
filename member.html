@@ -48,8 +48,8 @@
                    <li><a href="index.html">工作室风采</a></li>
                     <li><a href="news.html">新闻动态</a></li>
                     <li><a href="organization.html">组织活动</a></li>
-                    <li><a href="member.html" class="active">党员管理</a></li>
-                    <li><a href="member_manager.html">党员管理员</a></li>
+                    <li><a href="login.html">党员管理</a></li>
+                    <li><a href="manerger_login.html">党员管理员</a></li>
                 </ul>
              </div>
              <div class="navigation_right orgin" :class="(is_toggle?'after':'')" id="phone">
@@ -57,16 +57,25 @@
                     <li><a href="index.html">工作室风采</a></li>
                     <li><a href="news.html">新闻动态</a></li>
                     <li><a href="organization.html">组织活动</a></li>
-                    <li><a href="member.html" class="active">党员管理</a></li>
-                    <li><a href="member_manager.html">党员管理员</a></li>
+                    <li><a href="login.html">党员管理</a></li>
+                    <li><a href="manerger_login.html">党员管理员</a></li>
                 </ul>
              </div>
           </div>  
         </div>
     </header>
-    <div class="banner2">
-        <img src="images/banner1.jpg" class="img-responsive"/>
-    </div>
+  	<div class="banner2">
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+               <li data-target="#carousel-example-generic" v-for="(item,index) in sliderData" :data-slide-to="index" :class="index==0?'active':''"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox" >
+                <div  class="item" v-for="(item,index) in sliderData" :class="index==0?'active':''">
+                  <img :src="item.mainImg?item.mainImg[0].url:''" class="img-responsive banner_img">
+                </div>
+            </div>  
+        </div>
+	</div>
     <div style="width:100%;height:0.9rem;"></div>
     <div class="member">
         <div class="contain">
@@ -94,53 +103,60 @@
                 <div class="bg1" style="box-shadow:0 0 20px #f8f8f8;">
                     <div class="member_list">
                         <p class="font20 color2">姓名:</p>
-                        <input placeholder="请输入姓名" />
+                        <input placeholder="请输入姓名" / v-model="sForm.name">
                     </div>
                     <div class="member_list">
                         <p class="font20 color2">电话:</p>
-                        <input placeholder="请输入电话" />
+                        <input placeholder="请输入电话" v-model="sForm.phone"/>
                     </div>
                     <div class="member_list">
                         <p class="font20 color2">Email:</p>
-                        <input placeholder="请输入邮箱" />
+                        <input placeholder="请输入邮箱" v-model="sForm.email"/>
                     </div>
                     <div class="member_list">
                         <p class="font20 color2">性别:</p>
                         <div class="input">
                             <div class="boy flex">
-                                    <label  data-text="男" @click="gender">男</label>
-                                    <img :src="(submitData.userGender=='男'?'images/select_a.png':'images/select.png')" data-text="男" @click="gender"/>
+                                    <label  data-text="1" @click="gender">男</label>
+                                    <img :src="(sForm.gender==1?'images/select_a.png':'images/select.png')" data-text="1" @click="gender"/>
                                 </div>
                                 <div class="boy flex">
-                                    <label data-text="女"  @click="gender">女</label>
-                                    <img :src="(submitData.userGender=='女'?'images/select_a.png':'images/select.png')" data-text="女" @click="gender"/>
+                                    <label data-text="2"  @click="gender">女</label>
+                                    <img :src="(sForm.gender==2?'images/select_a.png':'images/select.png')" data-text="2" @click="gender"/>
                                 </div>
                         </div>
                     </div>
                     <div class="member_list">
                         <p class="font20 color2">出生日期:</p>
-                        <input type="date" value="2018-09-1" style="height:0.4rem;margin-top:0.2rem;" />
+                        <input type="date"  style="height:0.4rem;margin-top:0.2rem;" v-model="sForm.passage1"/>
                     </div>
                     <div class="member_list">
                         <p class="font20 color2">身份:</p>
-                        <select>
-                            <option>中共党员</option>
-                            <option>积极分子</option>
+                        <select v-model='sForm.level' id="pid" >
+                            <option value='积极分子'>积极分子</option>
+                            <option  value='预备党员'>预备党员</option>
+                            <option value='正式党员'>正式党员</option>
                         </select>
                     </div>
                     <div class="member_list">
                         <p class="font20 color2">职称:</p>
-                        <select>
-                            <option>教授</option>
-                            <option>副教授</option>
+                        <select v-model='sForm.idCard'>
+                            <option value='教授'>教授</option>
+                            <option value='副教授'>副教授</option>
+                            <option value='讲师'>讲师</option>
+                            <option value='博士后'>博士后</option>
+                            <option value='职员'>职员</option>
+                            <option value='高级'>高级</option>
+                            <option value='中级'>中级</option>
+                            <option value='初级'>初级</option>
                         </select>
                     </div>
                     <div class="member_list">
                         <p class="font20 color2">入党日期:</p>
-                        <input type="date" value="2018-09-1" style="height:0.4rem;margin-top:0.2rem;" />
+                        <input type="date"  style="height:0.4rem;margin-top:0.2rem;" v-model="sForm.address"/>
                     </div>
                 </div>
-                <button class="bg color1 font20">确认修改</button>
+                <button class="bg color1 font20" v-on:click="submit">确认修改</button>
             </div>
         </div>
     </div>
@@ -158,15 +174,105 @@ var app = new Vue({
             is_toggle:false,
             is_menu:0,
             menuShow:false,
-            submitData:{
-                userGender:'男'
-            }
+           
+             sForm:{
+		      name:'',
+		      phone:'',
+		      email:'', 
+		      gender:'',
+
+		      address:'',//入党日期
+		      level:'',//身份
+		      passage1:'',//出生日期
+		      idCard:'' //职称
+		    },
         }
     },
     created: function () {
-      
+      this.userInfoGet();
+      this.getSliderData();
     },
     methods:{
+
+    	userInfoGet(){
+		    const self = this;
+		    const postData = {};
+		    postData.token = localStorage.getItem('token');
+		    const callback = (res)=>{
+		      if(res.info.data.length>0){
+		        self.sForm.name = res.info.data[0].info.name;
+		        self.sForm.phone = res.info.data[0].info.phone; 
+		        self.sForm.address = res.info.data[0].info.address;
+		        self.sForm.email = res.info.data[0].info.email;
+		        self.sForm.level = res.info.data[0].info.level;
+		        self.sForm.passage1 = res.info.data[0].info.passage1;
+		        self.sForm.idCard = res.info.data[0].info.idCard;
+		        self.sForm.gender = res.info.data[0].info.gender;
+		      };
+		      self.mainData = res;  
+		    };
+		    window.base.userGet(postData,callback);
+		},
+
+		userInfoUpdate(){
+            const self = this;
+            const postData = {};
+            postData.token =localStorage.getItem('token');
+            postData.data = {};
+            postData.data = window.base.cloneForm(self.sForm);
+            const callback = (data)=>{
+              if(data.solely_code==100000){
+                alert('完善成功');
+                self.userInfoGet()
+              }else{
+                alert('网络故障')
+              };
+            };
+             window.base.userInfoUpdate(postData,callback);
+        },
+          
+        getSliderData(){
+		    const self = this;
+		    const postData = {};
+		    postData.searchItem = {
+		      thirdapp_id:2
+		    };
+		    postData.getBefore = {
+			    caseData:{
+			        tableName:'Label',
+			        searchItem:{
+			          title:['=',['党员管理轮播']],
+			        },
+			        middleKey:'parentid',
+			        key:'id',
+			        condition:'in',
+			    },
+		    };
+		    const callback = (res)=>{ 
+		      console.log(1000,res);
+		      if(res.info.data.length>0){
+		       self.sliderData.push.apply(self.sliderData,res.info.data)
+		      }
+		    };
+		    window.base.labelGet(postData,callback);
+		},
+
+          submit(){
+            const self = this;
+            var phone = self.sForm.phone;
+            console.log(self.sForm)
+            const pass = window.base.checkComplete(self.sForm);
+            if(pass){
+              if(phone.trim().length != 11 || !/^1[3|4|5|6|7|8|9]\d{9}$/.test(phone)){
+                alert('手机格式不正确')
+              }else{    
+                self.userInfoUpdate();       
+              }
+            }else{
+              alert('请补全信息');
+            };
+          },
+
         toggleMenu:function(e){
             var self = this;
             self.is_toggle = !self.is_toggle;
@@ -174,8 +280,8 @@ var app = new Vue({
         gender(e){
             const self = this;
             var dataSet = window.base.getDataSet(e);
-            self.submitData.userGender = dataSet.text;
-            console.log(909,self.submitData.userGender);
+            self.sForm.gender = dataSet.text;
+            console.log(909,self.sForm);
         },
         menu_show(id){
             const self = this;
@@ -184,11 +290,7 @@ var app = new Vue({
             self.menuShow = !self.menuShow;
             console.log('menuShow',self.menuShow);
         },
-        submit(){
-            const self = this;
-            self.is_menu = 999;
-            console.log('is_menu',self.is_menu);
-        }
+ 
     }
 });
 </script>

@@ -48,8 +48,8 @@
                     <li><a href="index.html">工作室风采</a></li>
                     <li><a href="news.html" class="active">新闻动态</a></li>
                     <li><a href="organization.html">组织活动</a></li>
-                    <li><a href="member.html">党员管理</a></li>
-                    <li><a href="member_manager.html">党员管理员</a></li>
+                    <li><a href="login.html">党员管理</a></li>
+                    <li><a href="manerger_login.html">党员管理员</a></li>
                 </ul>
              </div>
              <div class="navigation_right orgin" :class="(is_toggle?'after':'')" id="phone">
@@ -57,83 +57,59 @@
                    <li><a href="index.html">工作室风采</a></li>
                     <li><a href="news.html" class="active">新闻动态</a></li>
                     <li><a href="organization.html">组织活动</a></li>
-                    <li><a href="member.html">党员管理</a></li>
-                    <li><a href="member_manager.html">党员管理员</a></li>
+                    <li><a href="login.html">党员管理</a></li>
+                    <li><a href="manerger_login.html">党员管理员</a></li>
                 </ul>
              </div>
           </div>  
         </div>
     </header>
-</div>
-<div class="banner2">
-    <img src="images/banner1.jpg" class="img-responsive"/>
-</div>
+
+	<div class="banner2">
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+               <li data-target="#carousel-example-generic" v-for="(item,index) in sliderData" :data-slide-to="index" :class="index==0?'active':''"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox" >
+                <div  class="item" v-for="(item,index) in sliderData" :class="index==0?'active':''">
+                  <img :src="item.mainImg?item.mainImg[0].url:''" class="img-responsive banner_img">
+                </div>
+            </div>  
+        </div>
+	</div>
 <div style="width:100%;height:0.9rem;"></div>
 
 <div class="news">
     <div class="contain"  style="padding:0">
         <div class="news_cont">
             <div class="news_left">
-                <img src="images/img4.jpg">
+                <img :src="mainData&&mainData[0]&&mainData[0].label&&mainData[0].label[mainData[0].menu_id].mainImg[0]?mainData[0].label[mainData[0].menu_id].mainImg[0].url:''">
             </div>
             <div class="news_right">
-                <div class="news_in">
-                    <a href="detail.html">
-                        <h3 class="font20 color2">标题标题标题标题标题标题标题标题</h3>
-                        <p class="color6">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容那让 不然内容内容内容内容内容让女人内容内容内容内内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容那让 不然内容内容内容内容内容让女人内容内容内容内</p>
+                <div class="news_in" v-for="item in mainData">
+                    <a @click="intoDetail(item.id)">
+                        <h3 class="font20 color2">{{item.title}}</h3>
+                        <p class="color6">{{item.description}}</p>
                     </a>
                 </div>
-                <div class="news_in">
-                    <a href="detail.html">
-                        <h3 class="font20 color2">标题标题标题标题标题标题标题标题</h3>
-                        <p class="color6">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容那让 不然内容内容内容内容内容让女人内容内容内容内内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容那让 不然内容内容内容内容内容让女人内容内容内容内</p>
-                    </a>
-                </div>
-                <div class="news_in">
-                    <a href="detail.html">
-                        <h3 class="font20 color2">标题标题标题标题标题标题标题标题</h3>
-                        <p class="color6">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容那让 不然内容内容内容内容内容让女人内容内容内容内内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容那让 不然内容内容内容内容内容让女人内容内容内容内</p>
-                    </a>
-                </div>
+       
             </div>
         </div>
     </div>
 </div>
 <div class="other_news bg1">
     <div class="contain" style="padding:0">
-        <div class="news_item">
-            <img src="images/img3.jpg"/>
+        <div class="news_item" v-for="item in mainData">
+            <img :src="item.mainImg?item.mainImg[0].url:''"/>
             <div class="news_in">
-                <h5 class="font20 color2">标题标题标题标题标题标题标题标题标 标题标题标题标题标题标题标题标题标题标题标题标题标题标</h5>
-                <p class="font16 color6">内容内容内容内容内容内容让你让女人让你让女人 内容让你让女人内容内容内容内容内容内内容让你让女人内容内容内容内容内容内内容</p>
-                <a class="font14 color2">了解更多 》</a>
+                <h5 class="font20 color2">{{item.title}}</h5>
+                <p class="font16 color6">{{item.description}}</p>
+                <a class="font14 color2" @click="intoDetail(item.id)">了解更多 》</a>
             </div>
         </div>
-        <div class="news_item">
-            <img src="images/img3.jpg"/>
-            <div class="news_in">
-                <h5 class="font20 color2">标题标题标题标题标题标题标题标题标 标题标题标题标题标题标题标题标题标题标题标题标题标题标</h5>
-                <p class="font16 color6">内容内容内容内容内容内容让你让女人让你让女人 内容让你让女人内容内容内容内容内容内内容让你让女人内容内容内容内容内容内内容</p>
-                <a class="font14 color2">了解更多 》</a>
-            </div>
-        </div>
-        <div class="news_item">
-            <img src="images/img3.jpg"/>
-            <div class="news_in">
-                <h5 class="font20 color2">标题标题标题标题标题标题标题标题标 标题标题标题标题标题标题标题标题标题标题标题标题标题标</h5>
-                <p class="font16 color6">内容内容内容内容内容内容让你让女人让你让女人 内容让你让女人内容内容内容内容内容内内容让你让女人内容内容内容内容内容内内容</p>
-                <a class="font14 color2">了解更多 》</a>
-            </div>
-        </div>
-        <div class="news_item">
-            <img src="images/img3.jpg"/>
-            <div class="news_in">
-                <h5 class="font20 color2">标题标题标题标题标题标题标题标题标 标题标题标题标题标题标题标题标题标题标题标题标题标题标</h5>
-                <p class="font16 color6">内容内容内容内容内容内容让你让女人让你让女人 内容让你让女人内容内容内容内容内容内内容让你让女人内容内容内容内容内容内内容</p>
-                <a class="font14 color2">了解更多 》</a>
-            </div>
-        </div>
+        
     </div>
+</div>
 </div>
 <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript " src="js/bootstrap.js"></script>
@@ -146,12 +122,79 @@ var app = new Vue({
     data: function() {
         return {
             is_toggle:false,
+            mainData:[],
+            sliderData:[]
         }
     },
     created: function () {
-      
+      	this.getMainData();
+      	this.getSliderData();
     },
+
     methods:{
+
+    	getMainData(){
+		    const  self =this;
+		    const postData={};
+		    postData.searchItem = {
+		      thirdapp_id:2
+		    };
+		    postData.getBefore = {
+			    caseData:{
+			        tableName:'Label',
+			        searchItem:{
+			          title:['=',['新闻动态']],
+			        },
+			        middleKey:'menu_id',
+			        key:'id',
+			        condition:'in',
+			    },
+		    };
+		    const callback =(res)=>{
+		      if(res.info.data.length>0){
+		        self.mainData.push.apply(self.mainData,res.info.data)
+		      }else{
+		        alert('数据错误')
+		      };
+		      console.log('self.mainData',self.mainData)
+		    };
+		    window.base.articleGet(postData,callback);
+		},
+
+
+
+
+		getSliderData(){
+		    const self = this;
+		    const postData = {};
+		    postData.searchItem = {
+		      thirdapp_id:2
+		    };
+		    postData.getBefore = {
+			    caseData:{
+			        tableName:'Label',
+			        searchItem:{
+			          title:['=',['新闻动态轮播']],
+			        },
+			        middleKey:'parentid',
+			        key:'id',
+			        condition:'in',
+			    },
+		    };
+		    const callback = (res)=>{ 
+		      console.log(1000,res);
+		      if(res.info.data.length>0){
+		       self.sliderData.push.apply(self.sliderData,res.info.data)
+		      }
+		    };
+		    window.base.labelGet(postData,callback);
+		},
+
+		intoDetail(id){
+            const self = this;
+            window.location.href = 'detail.html?id='+id;
+        },
+
         toggleMenu:function(e){
             var self = this;
             self.is_toggle = !self.is_toggle;

@@ -48,8 +48,8 @@
                     <li><a href="index.html">工作室风采</a></li>
                     <li><a href="news.html">新闻动态</a></li>
                     <li><a href="organization.html" class="active">组织活动</a></li>
-                    <li><a href="member.html">党员管理</a></li>
-                    <li><a href="member_manager.html">党员管理员</a></li>
+                    <li><a href="login.html">党员管理</a></li>
+                    <li><a href="manerger_login.html">党员管理员</a></li>
                 </ul>
              </div>
              <div class="navigation_right orgin" :class="(is_toggle?'after':'')" id="phone">
@@ -57,33 +57,43 @@
                    <li><a href="index.html">工作室风采</a></li>
                     <li><a href="news.html">新闻动态</a></li>
                     <li><a href="organization.html" class="active">组织活动</a></li>
-                    <li><a href="member.html">党员管理</a></li>
-                    <li><a href="member_manager.html">党员管理员</a></li>
+                    <li><a href="login.html">党员管理</a></li>
+                    <li><a href="manerger_login.html">党员管理员</a></li>
                 </ul>
              </div>
           </div>  
         </div>
     </header>
-</div>
-<div class="banner2">
-    <img src="images/banner1.jpg" class="img-responsive banner_img">    
-</div>
+
+	<div class="banner2">
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+               <li data-target="#carousel-example-generic" v-for="(item,index) in sliderData" :data-slide-to="index" :class="index==0?'active':''"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox" >
+                <div  class="item" v-for="(item,index) in sliderData" :class="index==0?'active':''">
+                  <img :src="item.mainImg?item.mainImg[0].url:''" class="img-responsive banner_img">
+                </div>
+            </div>  
+        </div>
+	</div>
 <div style="width:100%;height:0.9rem;"></div>
 <div class="advanced organization">
     <div class="contain" style="padding:0">
-        <div class="advance_cont">
-            <a href="detail.html">
+        <div class="advance_cont" v-for="item in mainData">
+            <a @click="intoDetail(item.id)">
                 <div class="advance_left">
-                    <img src="images/img3.jpg" />
+                    <img :src="item.mainImg?item.mainImg[0].url:''" />
                 </div>
                 <div class="advance_right">
-                    <h3 class="color2 font20">标题标题标题标题标题标题标题标题</h3>
-                    <p class="font16 color6">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容那让 不然内容内容内容内容内容让女人内容内容内容内</p>
+                    <h3 class="color2 font20">{{item.title}}</h3>
+                    <p class="font16 color6">{{item.description}}</p>
                 </div>
-                <div class="organization_time font16 color9">2018-09-08</div>
+                <div class="organization_time font16 color9">{{item.create_time}}</div>
             </div>
         </a>
     </div>
+</div>
 </div>
 <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript " src="js/bootstrap.js"></script>
@@ -96,12 +106,74 @@ var app = new Vue({
     data: function() {
         return {
             is_toggle:false,
+            mainData:[],
+            sliderData:[]
         }
     },
     created: function () {
-      
+      	this.getMainData();
+      	this.getSliderData();
     },
+
     methods:{
+
+    	getMainData(){
+		    const  self =this;
+		    const postData={};
+		    postData.searchItem = {
+		      thirdapp_id:2
+		    };
+		    postData.getBefore = {
+			    caseData:{
+			        tableName:'Label',
+			        searchItem:{
+			          title:['=',['新闻动态']],
+			        },
+			        middleKey:'menu_id',
+			        key:'id',
+			        condition:'in',
+			    },
+		    };
+		    const callback =(res)=>{
+		      if(res.info.data.length>0){
+		        self.mainData.push.apply(self.mainData,res.info.data)
+		      }else{
+		        alert('数据错误')
+		      };
+		      console.log('self.mainData',self.mainData)
+		    };
+		    window.base.articleGet(postData,callback);
+		},
+
+
+
+
+		getSliderData(){
+		    const self = this;
+		    const postData = {};
+		    postData.searchItem = {
+		      thirdapp_id:2
+		    };
+		    postData.getBefore = {
+			    caseData:{
+			        tableName:'Label',
+			        searchItem:{
+			          title:['=',['新闻动态轮播']],
+			        },
+			        middleKey:'parentid',
+			        key:'id',
+			        condition:'in',
+			    },
+		    };
+		    const callback = (res)=>{ 
+		      console.log(1000,res);
+		      if(res.info.data.length>0){
+		       self.sliderData.push.apply(self.sliderData,res.info.data)
+		      }
+		    };
+		    window.base.labelGet(postData,callback);
+		},
+
         toggleMenu:function(e){
             var self = this;
             self.is_toggle = !self.is_toggle;
@@ -118,6 +190,11 @@ var app = new Vue({
             var self = this;
             self.is_show1 = true;                             
             console.log(self.is_show1);             
+        },
+
+        intoDetail(id){
+            const self = this;
+            window.location.href = 'detail.html?id='+id;
         },
         leave: function(e) {
             var self = this;

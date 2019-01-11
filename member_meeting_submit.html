@@ -48,8 +48,8 @@
                    <li><a href="index.html">工作室风采</a></li>
                     <li><a href="news.html">新闻动态</a></li>
                     <li><a href="organization.html">组织活动</a></li>
-                    <li><a href="member.html" class="active">党员管理</a></li>
-                    <li><a href="member_manager.html">党员管理员</a></li>
+                    <li><a href="login.html">党员管理</a></li>
+                    <li><a href="manerger_login.html">党员管理员</a></li>
                 </ul>
              </div>
              <div class="navigation_right orgin" :class="(is_toggle?'after':'')" id="phone">
@@ -57,8 +57,8 @@
                     <li><a href="index.html">工作室风采</a></li>
                     <li><a href="news.html">新闻动态</a></li>
                     <li><a href="organization.html">组织活动</a></li>
-                    <li><a href="member.html" class="active">党员管理</a></li>
-                    <li><a href="member_manager.html">党员管理员</a></li>
+                    <li><a href="login.html">党员管理</a></li>
+                    <li><a href="manerger_login.html">党员管理员</a></li>
                 </ul>
              </div>
           </div>  
@@ -97,10 +97,10 @@
             <div class="member_right">
                 <div class="attend">
                     <div class="textarea">
-                        <textarea placeholder="编辑文案"></textarea>
+                        <textarea placeholder="编辑文案" v-model="submitData.content"></textarea>
                     </div>
                     <div class="join">
-                        <button class="font16 color1 bg"  style="width:4rem;height:0.4rem;line-height:0.4rem;margin-top:1rem;margin-bottom: 0.5rem;">提交</button>
+                        <button class="font16 color1 bg"  style="width:4rem;height:0.4rem;line-height:0.4rem;margin-top:1rem;margin-bottom: 0.5rem;" @click="submit">提交</button>
                     </div>
                 </div>
             </div>
@@ -118,26 +118,56 @@ var app = new Vue({
     data: function() {
         return {
             is_toggle:false,
-            is_menu:0,
-            is_read:'最近通知',
+          	is_read:'',
             menuShow:false,
+            submitData:{
+		        content:'',
+		        type:1,
+		        class:1,
+		   
+		    },
         }
     },
     created: function () {
       
     },
     methods:{
+
+    	messageAdd(){
+		    const self = this;
+		    const postData = {};
+		    postData.token = localStorage.getItem('token');
+		    postData.data = {};
+		    postData.data = window.base.cloneForm(self.submitData);
+		    postData.data.relation_id = window.base.GetRequest().id;
+
+		    const callback = (res)=>{
+		      if(res.solely_code==100000){
+		        alert('提交成功');
+		       	window.history.go(-1);
+		      };
+		    };
+		    window.base.messageAdd(postData,callback);
+		},
+
+		  submit(){
+		    const self = this;
+		    const pass = window.base.checkComplete(self.submitData);
+		    if(pass){
+		      self.messageAdd();    
+		    }else{
+		      alert('请补全信息');
+		
+		    };
+		  },
+
+
         toggleMenu:function(e){
             var self = this;
             self.is_toggle = !self.is_toggle;
         },
-        gender(e){
-            const self = this;
-            var dataSet = window.base.getDataSet(e);
-            self.submitData.userGender = dataSet.text;
-            console.log(909,self.submitData.userGender);
-        },
-        read(e){
+    
+       	read(e){
             const self = this;
             var dataSet = window.base.getDataSet(e);
             self.is_read = dataSet.text;
@@ -155,11 +185,7 @@ var app = new Vue({
             self.menuShow = !self.menuShow;
             console.log('menuShow',self.menuShow);
         },
-        submit(){
-            const self = this;
-            self.is_menu = 999;
-            console.log('is_menu',self.is_menu);
-        }
+       
     }
 });
 </script>

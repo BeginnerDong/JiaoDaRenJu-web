@@ -48,8 +48,8 @@
                    <li><a href="index.html">工作室风采</a></li>
                     <li><a href="news.html">新闻动态</a></li>
                     <li><a href="organization.html">组织活动</a></li>
-                    <li><a href="member.html" class="active">党员管理</a></li>
-                    <li><a href="member_manager.html">党员管理员</a></li>
+                    <li><a href="login.html">党员管理</a></li>
+                    <li><a href="manerger_login.html">党员管理员</a></li>
                 </ul>
              </div>
              <div class="navigation_right orgin" :class="(is_toggle?'after':'')" id="phone">
@@ -57,8 +57,8 @@
                     <li><a href="index.html">工作室风采</a></li>
                     <li><a href="news.html">新闻动态</a></li>
                     <li><a href="organization.html">组织活动</a></li>
-                    <li><a href="member.html" class="active">党员管理</a></li>
-                    <li><a href="member_manager.html">党员管理员</a></li>
+                    <li><a href="login.html">党员管理</a></li>
+                    <li><a href="manerger_login.html">党员管理员</a></li>
                 </ul>
              </div>
           </div>  
@@ -79,8 +79,8 @@
                     <div class="font18 color sort">
                         <a href="member_notice.html" class="active">公告通知</a>
                         <ul>
-                            <li class="font16 color6" :style="is_read == '未阅读'?'border:solid 1px #b02923':''" data-text="未阅读" @click="read">未阅读</li>
-                            <li class="font16 color6" :style="is_read == '已阅读'?'border:solid 1px #b02923':''" data-text="已阅读" @click="read">已阅读</li>
+                            <li class="font16 color6" :style="isRead == 'noRead'?'border:solid 1px #b02923':''" data-type="noRead" @click="changeSearch">未阅读</li>
+                            <li class="font16 color6" :style="isRead == 'hasRead'?'border:solid 1px #b02923':''" data-type="hasRead" @click="changeSearch">已阅读</li>
                         </ul>
                     </div>
                     <div class="font18 color sort">
@@ -90,35 +90,50 @@
                         <a href="member_task.html">任务中心</a>
                     </div>
                     <div class="font18 color sort">
-                        <a  href="member_reaort.html">思想汇报</a>
+                        <a  href="member_report.html">思想汇报</a>
                     </div>
                 </div>
             </div>
             <div class="member_right">
-                <div :style="is_read == '未阅读'?'display:block':'display:none'">
-                    <div class="message_list bg1">
+                <!--<div :style="is_read == '未阅读'?'display:block':'display:none'">
+                    <div class="message_list bg1" v-for="item in mainData" v-if="item.relation&&item.relation.length==0"  @click="relationAdd(item.id)">
                         <div class="marks bg font12">未阅读</div>
-                        <div  class="message_left">
-                            <h3 class="font20 color2">标题标题标题标题标题标题标题标题</h3>
-                            <p class="font16 color6">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内容内容内容容内容内容内容内容</p>
-                            <span class="color9 font14">2018-09-19</span>
+                        <div  class="message_left" >
+                            <h3 class="font20 color2" >{{item.title}}</h3>
+                            <p class="font16 color6">{{item.description}}</p>
+                            <span class="color9 font14">{{item.create_time}}</span>
                         </div>
                         <div class="message_right">
-                            <img src="images/img2.jpg"/>
+                            <img :src="item.mainImg&&item.mainImg[0].url"/>
+                        </div>
+                    </div>
+                </div>-->
+                 <div>
+                    <div class="message_list bg1" v-for="item in mainData" @click="relationAdd(item.id)"> 
+                        <div  class="message_left" >
+                            <h3 class="font20 color2">{{item.title}}</h3>
+                            <p class="font16 color6">{{item.description}}</p>
+                            <span class="color9 font14">{{item.create_time}}</span>
+                        </div>
+                        <div class="message_right">
+                            <img :src="item.mainImg&&item.mainImg[0].url"/>
                         </div>
                     </div>
                 </div>
-                 <div :style="is_read == '已阅读'?'display:block':'display:none'">
-                    <div class="message_list bg1">
-                        <div  class="message_left">
-                            <h3 class="font20 color2">标题标题标题标题标题标题标题标题</h3>
-                            <p class="font16 color6">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内容让女人内容内容内容内容内容内容内容内容容内容内容内容内容</p>
-                            <span class="color9 font14">2018-09-19</span>
-                        </div>
-                        <div class="message_right">
-                            <img src="images/img2.jpg"/>
-                        </div>
-                    </div>
+                <div class="fenye">
+                    <span>
+                        共{{allPages}}页
+                    </span>
+                    <a class="pages backPage" data-type="back" @click="changePage">上一页</a>
+                    <span v-for="item in pageArray">
+                        <a v-if="item == paginate.currentPage" class="currentpages active" >{{item}}</a>
+                        <a v-if="item != paginate.currentPage" class="currentpages" :data-page="item"  @click="linkTo">{{item}}</a>
+                    </span>
+                    <a class="pages nextPage" data-type="next" @click="changePage">下一页</a>
+                    <span>
+                        跳转至：
+                        <input style="border:1px solid black;" :data-page="linkPage" v-model="linkPage" @blur="linkTo" />
+                    </span>
                 </div>
             </div>
         </div>
@@ -137,29 +152,115 @@ var app = new Vue({
             is_toggle:false,
             is_menu:0,
             is_attend:false,
-            is_read:'未阅读',
             menuShow:false,
+            linkPage:[],
+            pageArray: [],
+            allPages: 0,
+            paginate:{
+                count: 0,
+                currentPage: 1,
+                pagesize:4,
+                is_page: true,
+	       	},
+	       	mainData:[],
+	       	isRead:'noRead',
+            getBefore:{
+		      relation:{
+		   
+		        tableName:'Relation',
+		        searchItem:{
+	          	  relation_two:['in',[localStorage.getItem('user_no')]]
+		        },
+		        middleKey:'id',
+		        key:'relation_one',
+		        condition:'in',
+			   
+		      }
+		    }
         }
     },
     created: function () {
-      
+      	this.getMainData();
     },
     methods:{
+
+    	getMainData(isNew){
+		    const  self =this;
+		    if(isNew){
+	            self.mainData = [];
+		    };
+		    const postData={};
+		    postData.paginate = window.base.cloneForm(self.paginate);
+		    postData.searchItem = {
+		      thirdapp_id:2,
+		      menu_id:12
+		    };
+		    if(self.isRead=='noRead'){
+		    	self.getBefore.relation.condition='not in'
+		    }else if(self.isRead=='hasRead'){
+		    	self.getBefore.relation.condition='in'
+		    };
+		    postData.getBefore = window.base.cloneForm(self.getBefore);
+			
+		    const callback =(res)=>{
+		    	
+		      if(res.info.data.length>0){
+		      	
+		        self.mainData.push.apply(self.mainData,res.info.data);
+		        self.paginate['count'] = res.info.total;
+                window.base.computePageArr(self);
+
+		      }else{
+		        self.isLoadAll = true;
+		        alert('没有更多了')
+		      };
+		    };
+		    window.base.articleGet(postData,callback);
+		},
+
+		relationAdd(id){
+		    const self = this;
+
+		    const postData = {};
+		    postData.token = localStorage.getItem('token');
+		    postData.data = {
+		      relation_one:id,
+		      relation_two:localStorage.getItem('user_no'),
+		      thirdapp_id:2,
+		    };
+		    const callback = (res)=>{
+		      if(res.solely_code==100000){
+		        self.getMainData(true);
+		      };
+		    };
+		    window.base.relationAdd(postData,callback);
+		},
+
+		linkTo(e) {
+            var self = this;
+            console.log(e);
+            self.linkPage = window.base.getDataSet(e).page;
+            window.base.linkTo(self);
+        },
+
+        changePage(e) {
+            var self = this;
+            var dataSet = window.base.getDataSet(e);
+            window.base.changePage(dataSet, self);
+        },
+
         toggleMenu:function(e){
             var self = this;
             self.is_toggle = !self.is_toggle;
         },
-        gender(e){
+       
+        changeSearch(e){
             const self = this;
             var dataSet = window.base.getDataSet(e);
-            self.submitData.userGender = dataSet.text;
-            console.log(909,self.submitData.userGender);
+            self.isRead = dataSet.type;
+            self.getMainData(true)
         },
-        read(e){
-            const self = this;
-            var dataSet = window.base.getDataSet(e);
-            self.is_read = dataSet.text;
-        },
+
         menu_show(id){
             const self = this;
             var index = id;
@@ -167,11 +268,7 @@ var app = new Vue({
             self.menuShow = !self.menuShow;
             console.log('menuShow',self.menuShow);
         },
-        submit(){
-            const self = this;
-            self.is_menu = 999;
-            console.log('is_menu',self.is_menu);
-        }
+    
     }
 });
 </script>

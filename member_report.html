@@ -48,8 +48,8 @@
                    <li><a href="index.html">工作室风采</a></li>
                     <li><a href="news.html">新闻动态</a></li>
                     <li><a href="organization.html">组织活动</a></li>
-                    <li><a href="member.html" class="active">党员管理</a></li>
-                    <li><a href="member_manager.html">党员管理员</a></li>
+                    <li><a href="login.html">党员管理</a></li>
+                    <li><a href="manerger_login.html">党员管理员</a></li>
                 </ul>
              </div>
              <div class="navigation_right orgin" :class="(is_toggle?'after':'')" id="phone">
@@ -57,8 +57,8 @@
                     <li><a href="index.html">工作室风采</a></li>
                     <li><a href="news.html">新闻动态</a></li>
                     <li><a href="organization.html">组织活动</a></li>
-                    <li><a href="member.html" class="active">党员管理</a></li>
-                    <li><a href="member_manager.html">党员管理员</a></li>
+                    <li><a href="login.html">党员管理</a></li>
+                    <li><a href="manerger_login.html">党员管理员</a></li>
                 </ul>
              </div>
           </div>  
@@ -72,9 +72,9 @@
         <div class="contain">
             <div class="member_left bg1">
                 <h3 class="bg font20 color1"><span>管理员</span></h3>
-               <div class="member_bottom">
+                <div class="member_bottom">
                     <div class="font18 color sort">
-                        <a href="member.html">基本信息</a>  
+                        <a @click="menu_show(0)" href="member.html">基本信息</a>  
                     </div>
                     <div class="font18 color sort">
                         <a href="member_notice.html">公告通知</a>
@@ -83,50 +83,57 @@
                         <a href="member_meeting.html">会议通知</a>
                     </div>
                     <div class="font18 color sort">
-                        <a href="member_task.html">任务中心</a>
+                        <a href="member_task.html" >任务中心</a>
+                          
                     </div>
                     <div class="font18 color sort">
                         <a  href="member_report.html" class="active">思想汇报</a>
-                          <ul>
-                            <li class="font16 color6" data-text="最新任务" @click="report" :style="is_report == '最新任务'?'border:solid 1px #b02923':''">最新任务</li>
-                            <li class="font16 color6" data-text="未完成" @click="report" :style="is_report == '未完成'?'border:solid 1px #b02923':''">未完成</li>
-                            <li class="font16 color6" data-text="迟交" @click="report" :style="is_report == '迟交'?'border:solid 1px #b02923':''">迟交</li>
-                            <li class="font16 color6" :style="is_report == '按时完成'?'border:solid 1px #b02923;':''" data-text="按时完成" @click="report">按时完成</li>
+                        <ul>
+                            <li class="font16 color6" :style="currentId == '0'?'border:solid 1px #b02923':''"  @click="tab(0)">全部</li>
+                            <li class="font16 color6" :style="currentId == '1'?'border:solid 1px #b02923':''"  @click="tab(1)">未完成</li>
+
+                            <li class="font16 color6"  :style="currentId == '2'?'border:solid 1px #b02923':''" @click="tab(2)">迟交</li>
+                            <li class="font16 color6"  :style="currentId == '3'?'border:solid 1px #b02923':''" @click="tab(3)">按时完成</li>
                         </ul>
                     </div>
                 </div>
             </div>
-             <div class="member_right" :style="is_menu == 999?'display:none':'display:block'">
-                <div :style="is_report == '最新任务'?'display:block':'display:none'">
-                    <div class="message_list bg1" style="height:2.6rem;">
-                        <div class="marks bg font12">最新</div>
+            
+            <div class="member_right" :style="is_menu == 999?'display:none':'display:block'">
+                <div>
+                    <div class="message_list bg1" style="height:2.6rem;" v-for="item in mainData">
+
                         <div  class="message_left" style="width:100%">
-                            <div class="message_time">
-                                <span class="font14 color6">发布任务时间：2018-6-9</span>
-                                <span class="font14 color6">完成任务时间：2018-6-9</span>
-                            </div>
-                            <h3 class="font20 color2">标题标题标题标题标题标题标题标题</h3>
-                            <p class="font16 color6" style="height:0.8rem">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内容内容内容容内容内容内容内容</p>
+                        	<div class="message_time">
+	                            <span class="font14 color6">发布任务时间：{{item.create_time}}</span>
+	                            <span class="font14 color6">完成任务时间：{{item.end_time}}</span>
+	                        </div>
+                            <h3 class="font20 color2">{{item.title}}</h3>
+                            <p class="font16 color6">{{item.description}}</p>
                         </div>
                         <div class="join">
-                            <a href="member_report_upload.html" class="font16 color1 bg"  style="width:4rem;height:0.4rem;line-height:0.4rem;">提交</a>
+                            <a  class="font16 color1 bg" @click="intoSubmit(item.id)" style="width:4rem;height:0.4rem;line-height:0.4rem;">{{item.message.length>0?'编辑':'提交'}}</a >
                         </div>
                     </div>
                 </div>
-                 <div :style="is_report == '未完成'?'display:block':'display:none'">
-                    <div class="message_list bg1"  style="height:2.6rem;">
-                        <div class="message_time">
-                                <span class="font14 color6">发布任务时间：2018-6-9</span>
-                                <span class="font14 color6">完成任务时间：2018-6-9</span>
-                            </div>
-                            <h3 class="font20 color2">标题标题标题标题标题标题标题标题</h3>
-                            <p class="font16 color6" style="height:0.8rem">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内容内容内容容内容内容内容内容</p>
-                        <div class="join">
-                            <a href="member_report_upload.html" class="font16 color1 bg"  style="width:4rem;height:0.4rem;line-height:0.4rem;">提交</a>
-                        </div>
-                    </div>
-                </div>
+                 
+
             </div>
+             <div class="fenye">
+                    <span>
+                        共{{allPages}}页
+                    </span>
+                    <a class="pages backPage" data-type="back" @click="changePage">上一页</a>
+                    <span v-for="item in pageArray">
+                        <a v-if="item == paginate.currentPage" class="currentpages active" >{{item}}</a>
+                        <a v-if="item != paginate.currentPage" class="currentpages" :data-page="item"  @click="linkTo">{{item}}</a>
+                    </span>
+                    <a class="pages nextPage" data-type="next" @click="changePage">下一页</a>
+                    <span>
+                        跳转至：
+                        <input style="border:1px solid black;" :data-page="linkPage" v-model="linkPage" @blur="linkTo" />
+                    </span>
+                </div>
         </div>
     </div>
 </div>
@@ -140,26 +147,187 @@ var app = new Vue({
     el: '#app',
     data: function() {
         return {
+        	currentId:0,
             is_toggle:false,
             is_menu:0,
-            is_report:'最新任务',
+            is_read:'最新任务',
+            linkPage:[],
+            pageArray: [],
+            allPages: 0,
             menuShow:false,
-        }
-    },
-    created: function () {
-      
+            mainData:[],
+            getBefore:{
+		      	//caseData:{
+			        //tableName:'Label',
+			        //searchItem:{
+			          //title:['=',['任务中心']],
+			        //},
+			        //middleKey:'menu_id',
+			        //key:'id',
+			        //condition:'in',
+		    	//}
+		     
+        	},
+           	paginate:{
+                count: 0,
+                currentPage: 1,
+                pagesize: 6,
+                is_page: true,
+            },
+            searchItem:{
+            	thirdapp_id:2,
+            	menu_id:15
+            }
+    	}
+	},
+
+    created:function () {
+      	this.getMainData()
     },
     methods:{
+
+    	getMainData(isNew){
+		    const  self =this;
+		    if(isNew){
+		        self.mainData = [];
+	            self.paginate = {
+	                count: 0,
+	                currentPage: 1,
+	                pagesize: 6,
+	                is_page: true,
+	            }
+		    };
+		    const postData={};
+		    postData.paginate = window.base.cloneForm(self.paginate);
+		    postData.searchItem = window.base.cloneForm(self.searchItem);
+		    postData.getBefore = window.base.cloneForm(self.getBefore);
+		    postData.getAfter = {
+		      message:{
+		        tableName:'Message',
+		        middleKey:'id',
+		        key:'relation_id',
+		        searchItem:{
+		          status:1
+		        },
+		        condition:'='
+		      }
+		    };
+		    const callback =(res)=>{
+		      if(res.info.data.length>0){
+		        self.mainData.push.apply(self.mainData,res.info.data);
+		        self.paginate['count'] = res.info.total;
+                window.base.computePageArr(self);
+		       	for (var i = 0; i < self.mainData.length; i++) {
+		       		self.mainData[i].create_time = window.base.shortString(self.mainData[i].create_time,16)
+		       		self.mainData[i].end_time = self.timestampToTime(self.mainData[i].end_time)
+		       		console.log(self.mainData[0].end_time)
+		       		
+		       	};
+		      }else{
+		        self.isLoadAll = true;
+		        alert('没有更多了');
+		      };
+		      
+		    };
+		    window.base.articleGet(postData,callback);
+		},
+
+
+		timestampToTime(timestamp) {
+    		const self = this;
+    		console.log(timestamp)
+		    var timestamp = parseInt(timestamp);
+		    
+		    var format = new Date(timestamp).getFullYear()+'-';
+		    if(new Date(timestamp).getMonth()<10){
+		      var format = format + '0' + (new Date(timestamp).getMonth()+1)+'-';
+		    }else{
+		      var format = format +  (new Date(timestamp).getMonth()+1)+'-';
+		    }
+		    if(new Date(timestamp).getDate()<10){
+		      var format = format + '0' + new Date(timestamp).getDate()+'  ';
+		    }else{
+		      var format = format +  new Date(timestamp).getDate()+'  ';
+		    }
+		    if(new Date(timestamp).getHours()<10){
+		      var format = format + '0' + new Date(timestamp).getHours();
+		    }else{
+		      var format = format +  new Date(timestamp).getHours();
+		    }
+		    if(new Date(timestamp).getMinutes()<10){
+		      var format = format + ':' + '0' + new Date(timestamp).getMinutes();
+		    }else{
+		      var format = format + ':' + new Date(timestamp).getMinutes();
+		    }
+
+	    	return format;
+
+		},
+
+		tab(num){
+		    const self = this;
+		    self.currentId=num;
+		    self.getBefore = {};
+		    if(num==0){
+
+		    }else if(num==1){
+		    	self.getBefore.relation={
+		            tableName:'Message',
+		        	searchItem:{
+	          	  		status:['in',[1]]
+		        	},
+		       	 	middleKey:'id',
+		        	key:'relation_id',
+		        	condition:'not in',	
+		    	}
+		  		      			   	    	
+		    }else if(num==2){
+		    	self.getBefore.relation={
+		            tableName:'Message',
+		        	searchItem:{
+	          	  		behavior:['in',[1]]
+		        	},
+		       	 	middleKey:'id',
+		        	key:'relation_id',
+		        	condition:'in',	
+		    	}
+		    }else if(num==3){
+		    	   	self.getBefore.relation={
+		            tableName:'Message',
+		        	searchItem:{
+	          	  		behavior:['in',[2]]
+		        	},
+		       	 	middleKey:'id',
+		        	key:'relation_id',
+		        	condition:'in',	
+		    	}
+		    };
+		    self.getMainData(true)
+		},
+
         toggleMenu:function(e){
             var self = this;
             self.is_toggle = !self.is_toggle;
         },
-        report(e){
-            const self = this;
-            var dataSet = window.base.getDataSet(e);
-            self.is_report = dataSet.text;
-            self.is_menu = 0;
+
+   		linkTo(e) {
+            var self = this;
+            console.log(e);
+            self.linkPage = window.base.getDataSet(e).page;
+            window.base.linkTo(self);
         },
+
+        changePage(e) {
+            var self = this;
+            var dataSet = window.base.getDataSet(e);
+            window.base.changePage(dataSet, self);
+        },
+
+        intoSubmit(id){
+            const self = this;
+            window.location.href = 'member_task_upload.html?id='+id;
+        },
+      
         menu_show(id){
             const self = this;
             var index = id;

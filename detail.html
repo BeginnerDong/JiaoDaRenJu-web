@@ -48,8 +48,9 @@
                     <li><a href="index.html">工作室风采</a></li>
                     <li><a href="news.html" class="active">新闻动态</a></li>
                     <li><a href="organization.html">组织活动</a></li>
-                    <li><a href="agent.html">党员管理</a></li>
-                    <li><a href="about.html">党员管理员</a></li>
+                   
+                    <li><a href="login.html">党员管理</a></li>
+                    <li><a href="manerger_login.html">党员管理员</a></li>
                 </ul>
              </div>
              <div class="navigation_right orgin" :class="(is_toggle?'after':'')" id="phone">
@@ -57,8 +58,8 @@
                    <li><a href="index.html">工作室风采</a></li>
                     <li><a href="news.html" class="active">新闻动态</a></li>
                     <li><a href="organization.html">组织活动</a></li>
-                    <li><a href="agent.html">党员管理</a></li>
-                    <li><a href="about.html">党员管理员</a></li>
+                    <li><a href="login.html">党员管理</a></li>
+                    <li><a href="manerger_login.html">党员管理员</a></li>
                 </ul>
              </div>
           </div>  
@@ -67,15 +68,11 @@
     <div style="width:100%;height:0.9rem;"></div>
     <div class="detail">
         <div class="contain">
-            <p class="font20 color2 title">标题标题标题图标标题标题标题标题标题图标疼不疼标题疼不疼标题标题图标图标</p>
-            <span class="font16 color">2018-9-9</span>
+            <p class="font20 color2 title">{{mainData.title}}</p>
+            <span class="font16 color">{{mainData.create_time}}</span>
             <div class="detail_cont">
-                <p>
-                    <img src="images/banner1.jpg"/>
-                </p>
-                <p class="font16 color6">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容让你让女人内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容让你让女人内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容让你让女人内容内容容内容内容内容内容内容让你让女人内容内容 内容内容内</p>
-                <p class="font16 color6">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容让你让女人内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容让你让女人内容内容内容内容内容内容内容内容让你让女人内容内容 内容内容内</p>
-                <p class="font16 color6">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容让你让女人内容内容 内容内容内</p>
+                <div class="font16 color6" v-html=" mainData.content"></div>
+                
             </div>
         </div>
     </div>
@@ -90,13 +87,33 @@ var app = new Vue({
     el: '#app',
     data: function() {
         return {
+            mainData:{},
             is_toggle:false,
         }
     },
     created: function () {
-      
+        this.getMainData()
     },
     methods:{
+
+        getMainData(){
+            const  self =this;
+           
+            const postData={};
+            postData.searchItem = {
+              thirdapp_id:2,
+              id:window.base.GetRequest().id
+            };
+            const callback =(res)=>{
+              if(res.info.data.length>0){
+                self.mainData = res.info.data[0]; 
+              }else{
+                alert('数据错误');
+              };
+            };
+            window.base.articleGet(postData,callback);
+        },
+
         toggleMenu:function(e){
             var self = this;
             self.is_toggle = !self.is_toggle;

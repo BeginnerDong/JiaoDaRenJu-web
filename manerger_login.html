@@ -48,8 +48,8 @@
                     <li><a href="index.html" class="active">工作室风采</a></li>
                     <li><a href="news.html">新闻动态</a></li>
                     <li><a href="organization.html">组织活动</a></li>
-                    <li><a href="agent.html">党员管理</a></li>
-                    <li><a href="about.html">党员管理员</a></li>
+                    <li><a href="login.html">党员管理</a></li>
+                    <li><a href="manerger_login.html">党员管理员</a></li>
                 </ul>
              </div>
              <div class="navigation_right orgin" :class="(is_toggle?'after':'')" id="phone">
@@ -57,8 +57,8 @@
                    <li><a href="index.html" class="active">工作室风采</a></li>
                     <li><a href="news.html">新闻动态</a></li>
                     <li><a href="organization.html">组织活动</a></li>
-                    <li><a href="agent.html">党员管理</a></li>
-                    <li><a href="about.html">党员管理员</a></li>
+                    <li><a href="login.html">党员管理</a></li>
+                    <li><a href="manerger_login.html">党员管理员</a></li>
                 </ul>
              </div>
           </div>  
@@ -71,7 +71,7 @@
                     <span>
                         <img src="images/phone.png" />
                     </span>
-                    <input type="" placeholder="请输入手机号" />
+                    <input type="" placeholder="请输入手机号" v-model='submitData.login_name'/>
                 </div>
             </div>
             <div class="list_input">
@@ -79,10 +79,10 @@
                     <span>
                         <img src="images/password.png" />
                     </span>
-                    <input type="password" placeholder="请输入密码" />
+                    <input type="password" placeholder="请输入密码" v-model='submitData.password'/>
                 </div>
             </div>
-            <a class="font18 color1 bg" href="member_manager.html">登录</a>
+            <a class="font18 color1 bg" v-on:click="submit">登录</a>
         </div>
     </div>
 </div>
@@ -93,38 +93,98 @@
 <script src="js/rem.js"></script>
 <script type="text/babel">
 var app = new Vue({
-    el: '#app',
-    data: function() {
-        return {
-            is_toggle:false,
-        }
-    },
-    created: function () {
-      
-    },
-    methods:{
-        toggleMenu:function(e){
-            var self = this;
-            self.is_toggle = !self.is_toggle;
+        el: '#app',
+        data: function() {
+            return {
+
+                submitData:{
+                   login_name:'',
+                   password:''
+                },
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+                is_toggle:'',
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+            }
         },
-        consult:function(e){
-            var self = this;
-            self.is_show = !self.is_show;
+        
+        created: function () {
+            this.checkLogin()
         },
-        mask:function(e){
-            var self = this;
-            self.is_show = false;
-        },
-         enter: function(e) {
-            var self = this;
-            self.is_show1 = true;                             
-            console.log(self.is_show1);             
-        },
-        leave: function(e) {
-            var self = this;
-            self.is_show1 = false;                             
-            console.log(self.is_show1);             
-        },
+
+        methods:{
+            
+
+            checkLogin(){
+                const self = this;
+                if(localStorage.getItem('token')&&localStorage.getItem('user_no')&&localStorage.getItem('user_type')==1){
+                    window.location.href='./member_manager.html'
+                }
+            },
+
+            submit(){
+                const self = this;
+                const postData = {
+                	login_name:self.submitData.login_name,
+                	password:self.submitData.password,
+                };
+                if(window.base.checkComplete(self.submitData)){
+                    const callback = (res)=>{
+	                  if(res.solely_code==100000){
+	              		localStorage.setItem('token',res.token);
+	              		localStorage.setItem('user_no',res.info.user_no);
+                        localStorage.setItem('user_type',res.info.user_type);
+                        if(res.info.user_type==0){
+                            window.location.href='./member.html'
+                        }else if(res.info.user_type==1){
+                            window.location.href='./member_manager.html'
+                        }
+	                    
+	                  }else{
+	                    alert(res.msg)
+	                  }
+	                }
+	                window.base.login(postData,callback);
+                }else{
+                    alert('请输入账号密码','none')
+                };
+
+            },  
+        
+   
+	        toggleMenu:function(e){
+	            var self = this;
+	            self.is_toggle = !self.is_toggle;
+	        },
+	        consult:function(e){
+	            var self = this;
+	            self.is_show = !self.is_show;
+	        },
+	        mask:function(e){
+	            var self = this;
+	            self.is_show = false;
+	        },
+	         enter: function(e) {
+	            var self = this;
+	            self.is_show1 = true;                             
+	            console.log(self.is_show1);             
+	        },
+	        leave: function(e) {
+	            var self = this;
+	            self.is_show1 = false;                             
+	            console.log(self.is_show1);             
+	        },
     }
 });
 </script>

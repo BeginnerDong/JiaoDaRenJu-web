@@ -65,22 +65,13 @@
         </div>
     </header>
     <div class="banner2">
-        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-               <li data-target="#carousel-example-generic" v-for="(item,index) in sliderData" :data-slide-to="index" :class="index==0?'active':''"></li>
-            </ol>
-            <div class="carousel-inner" role="listbox" >
-                <div  class="item" v-for="(item,index) in sliderData" :class="index==0?'active':''">
-                  <img :src="item.mainImg?item.mainImg[0].url:''" class="img-responsive banner_img">
-                </div>
-            </div>  
-        </div>
-	</div>
+        <img src="images/banner1.jpg" class="img-responsive"/>
+    </div>
     <div style="width:100%;height:0.9rem;"></div>
    <div class="meeting">
        <div class="contain">
            <div class="search flex">
-                <input placeholder="请搜索内容" class="font18 color9" v-model="sForm.title"/>
+                <input placeholder="请搜索内容" class="font18 color9" v-model="sForm.name"/>
                 <div class="search_btn" @click="search">
                     <img src="images/search.png"/>
                 </div>
@@ -90,18 +81,27 @@
                     <h2 class="color1"><span>会议记录</span></h2>
                 </div>
                 <ul class="meeting_tilte">
-                    <li>会议名称</li>
-                    <li>会议地点</li>
-                    <li>时间</li>
+                    <li>参会人</li>
+                    <li>打卡状态</li>
+                    <li>打卡时间</li>
                     <li>操作</li>
                 </ul>
                 <ul class="meeting_list" v-for="item in mainData">
-                    <li>{{item.title}}</li>
-                    <li>{{item.description}}</li>
-  
-                    <li>{{item.start_time}}</li>
-                    <li>
-                        <button class="bg" @click="intoSubmit(item.id)">查看参会人</button>
+                    <li>{{item.userInfo[0].name}}</li>
+                    <li :class="item.score==1?'color':''">{{item.score==1?'未签到':'已签到'}}</li>
+ 
+                    
+                    <li>{{item.sign_time}}</li>
+                    <li v-if="item.score==2">
+                        <button class="bg" @click="messageUpdate(item.id,0)">确认</button>
+                        <button class="bg" @click="messageUpdate(item.id,1)">取消</button>
+                    </li>
+                    <li v-if="item.score==3">
+                        <button class="bg" >已核销</button>
+                    </li>
+                     <li v-if="item.score==1">
+                        <button class="bg">待签到</button>
+           
                     </li>
                 </ul>
                 
@@ -130,25 +130,22 @@ var app = new Vue({
                 pagesize: 6,
                 is_page: true,
             },
+            paginate:{
+                count: 0,
+                currentPage: 1,
+                pagesize: 6,
+                is_page: true,
+            },
 			getBefore:{
-		      caseData:{
-		        tableName:'Label',
-		        searchItem:{
-		          title:['=',['会议通知']],
-		        },
-		        middleKey:'menu_id',
-		        key:'id',
-		        condition:'in',
-		      }
+		     
 		    },
 		    sForm:{
-		    	title:''
+			    name:''
 			}
         }
     },
     created: function () {
-      	this.getMainData();
-      	this.getSliderData()
+      	this.getMainData()
     },
 
 
@@ -167,65 +164,125 @@ var app = new Vue({
 	            }
 		    };
 		    const postData={};
+		    postData.token = localStorage.getItem('token');
 		    postData.paginate = window.base.cloneForm(self.paginate);
-		    postData.searchItem = window.base.cloneForm(self.searchItem);
-		    postData.getBefore = window.base.cloneForm(self.getBefore);
+		    postData.searchItem = {
+		      relation_id:window.base.GetRequest().id,
+		      type:1,
+		      class:2,
+		      user_type:0
+		    };
+		    if(JSON.stringify(self.getBefore) != "{}"){
+		      postData.getBefore = window.base.cloneForm(self.getBefore);
+		    };
+		    postData.getAfter = {
+		      userInfo:{
+		        tableName:'UserInfo',
+		        middleKey:'user_no',
+		        key:'user_no',
+		        condition:'=',
+		        searchItem:{
+		          status:1,
+		        }
+		      }
+		    };
 		    const callback =(res)=>{
 		      if(res.info.data.length>0){
 		        self.mainData.push.apply(self.mainData,res.info.data);
-		        for (var i = 0; i < self.mainData.length; i++) {
-		       		self.mainData[i].start_time = window.base.shortString(self.mainData[i].start_time,16)	
+		        
+		       	for (var i = 0; i < self.mainData.length; i++) {
+		       		
+		       		self.mainData[i].sign_time = self.timestampToTime(self.mainData[i].sign_time)
+		       		console.log(self.mainData[0].end_time)
+		       		
 		       	};
 		      }else{
 		        self.isLoadAll = true;
 		        alert('没有更多了');
 		      };
 		    };
-		    window.base.articleGet(postData,callback);
+		    window.base.messageGet(postData,callback);
+		  },
+
+		messageUpdate(id,num){
+		    const self = this;
+		   
+		    const postData = {};
+		     postData.token = localStorage.getItem('token');
+		    postData.searchItem={
+		      id:id,
+		      user_type:0
+		    };
+		    postData.data = {};
+		    if(num==0){
+		      postData.data.score = 3
+		    }else if(num==1){
+		      postData.data.score = 1
+		    };
+		    
+		    const callback = (res)=>{
+		      if(res.solely_code==100000){
+		        alert('修改成功');
+		        setTimeout(function(){
+		          self.getMainData(true)
+		        },1000);
+		      };
+		    };
+		    window.base.messageUpdate(postData,callback);
 		},
 
 		search(){
 		    const self = this;
-		    if(self.sForm.title){  
-		      self.searchItem.title = ['LIKE',['%'+self.sForm.title+'%']];
+		    if(self.sForm.name){  
+		      self.getBefore = {
+		        userInfo:{
+		          tableName:'UserInfo',
+		          middleKey:'user_no',
+		          key:'user_no',
+		          condition:'in',
+		          searchItem:{
+		            name:['LIKE',['%'+self.sForm.name+'%']],
+		          }
+		        }
+		      };
 		      self.getMainData(true)
 		      
-		    }else if(self.sForm.title==''){
-		        delete self.searchItem.title;
+		    }else if(self.sForm.name==''){
+		        self.getBefore = {};
 		        self.getMainData(true)  
 		    }
-		},
+	 },
 
-		getSliderData(){
-		    const self = this;
-		    const postData = {};
-		    postData.searchItem = {
-		      thirdapp_id:2
-		    };
-		    postData.getBefore = {
-			    caseData:{
-			        tableName:'Label',
-			        searchItem:{
-			          title:['=',['党员管理员轮播']],
-			        },
-			        middleKey:'parentid',
-			        key:'id',
-			        condition:'in',
-			    },
-		    };
-		    const callback = (res)=>{ 
-		      console.log(1000,res);
-		      if(res.info.data.length>0){
-		       self.sliderData.push.apply(self.sliderData,res.info.data)
-		      }
-		    };
-		    window.base.labelGet(postData,callback);
-		},
+		timestampToTime(timestamp) {
+    		const self = this;
+    		console.log(timestamp)
+		    var timestamp = parseInt(timestamp);
+		    
+		    var format = new Date(timestamp).getFullYear()+'-';
+		    if(new Date(timestamp).getMonth()<10){
+		      var format = format + '0' + (new Date(timestamp).getMonth()+1)+'-';
+		    }else{
+		      var format = format +  (new Date(timestamp).getMonth()+1)+'-';
+		    }
+		    if(new Date(timestamp).getDate()<10){
+		      var format = format + '0' + new Date(timestamp).getDate()+'  ';
+		    }else{
+		      var format = format +  new Date(timestamp).getDate()+'  ';
+		    }
+		    if(new Date(timestamp).getHours()<10){
+		      var format = format + '0' + new Date(timestamp).getHours();
+		    }else{
+		      var format = format +  new Date(timestamp).getHours();
+		    }
+		    if(new Date(timestamp).getMinutes()<10){
+		      var format = format + ':' + '0' + new Date(timestamp).getMinutes();
+		    }else{
+		      var format = format + ':' + new Date(timestamp).getMinutes();
+		    }
 
-		intoSubmit(id){
-            const self = this;
-            window.location.href = 'member_detail.html?id='+id;
-        },
+	    	return format;
+
+		},
 
         toggleMenu:function(e){
             var self = this;

@@ -64,137 +64,256 @@
           </div>  
         </div>
     </header>
-</div>
-<div class="banner2">
+
+	<div class="banner2">
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
-                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+               <li data-target="#carousel-example-generic" v-for="(item,index) in sliderData" :data-slide-to="index" :class="index==0?'active':''"></li>
             </ol>
-            <div class="carousel-inner" role="listbox">
-                <div  class="item active">
-                  <img src="images/banner1.jpg" class="img-responsive banner_img">
-                </div>
-                <div  class="item">
-                  <img src="images/banner1.jpg" class="img-responsive banner_img">
+            <div class="carousel-inner" role="listbox" >
+                <div  class="item" v-for="(item,index) in sliderData" :class="index==0?'active':''">
+                  <img :src="item.mainImg?item.mainImg[0].url:''" class="img-responsive banner_img">
                 </div>
             </div>  
         </div>
-</div>
-<div style="width:100%;height:0.9rem;"></div>
+	</div>
+	<div style="width:100%;height:0.9rem;"></div>
 
-<div class="introduce bg2">
-    <div class="title_box">
-        <h2 class="color1"><span>工作室简介</span></h2>
-    </div>
-    <div class="contain"  style="padding:0">
-        <div class="introduce_cont bg1">
-            <div class="introduce_left">
-                <img src="images/img1.jpg">
-            </div>
-            <div class="introduce_right">
-                <div class="introduce_in bg2">
-                    <h3 class="font20">标题标题标题标题标题标题标题标题</h3>
-                    <p>内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容那让 不然内容内容内容内容内容让女人内容内容内容内内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容那让 不然内容内容内容内容内容让女人内容内容内容内</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="head bg1">
-    <div class="title_box">
-        <h2 class="color1"><span>负责人</span></h2>
-    </div>
-    <div class="contain head_cont" style="padding:0">
-        <div class="head_item">
-            <img src="images/img2.jpg"/>
-            <div class="head_bottom">
-                <p class="font18">张三</p>
-                <p class="font6 color6">副教授、副院长</p>
-            </div>
-        </div>
-        <div class="head_item">
-            <img src="images/img2.jpg"/>
-            <div class="head_bottom">
-                <p class="font18">张三</p>
-                <p class="font6 color6">副教授、副院长</p>
-            </div>
-        </div>
-        <div class="head_item head_big">
-            <img src="images/img2.jpg"/>
-            <div class="head_bottom">
-                <p class="font18">张三</p>
-                <p class="font6 color6">副教授、副院长</p>
-            </div>
-        </div>
-        <div class="head_item">
-            <img src="images/img2.jpg"/>
-            <div class="head_bottom">
-                <p class="font18">张三</p>
-                <p class="font6 color6">副教授、副院长</p>
-            </div>
-        </div>
-        <div class="head_item">
-            <img src="images/img2.jpg"/>
-            <div class="head_bottom">
-                <p class="font18">张三</p>
-                <p class="font6 color6">副教授、副院长</p>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="advanced">
-    <div class="title_box">
-        <h2 class="color1"><span>先进典型</span></h2>
-    </div>
-    <div class="contain" style="padding:0">
-        <div class="advance_cont">
-            <a href="detail.html">
-                <div class="advance_left">
-                    <img src="images/img3.jpg" />
-                </div>
-                <div class="advance_right">
-                    <h3 class="color2">标题标题标题标题标题标题标题标题</h3>
-                    <p class="font16 color6">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容那让 不然内容内容内容内容内容让女人内容内容内容内</p>
-                </div>
-            </a>
-        </div>
-    </div>
+	<div class="introduce bg2">
+	    <div class="title_box">
+	        <h2 class="color1"><span>工作室简介</span></h2>
+	    </div>
+	    <div class="contain"  style="padding:0">
+	        <div class="introduce_cont bg1">
+	            <div class="introduce_left">
+	                <img :src="mainData.mainImg?mainData.mainImg[0].url:''">
+	            </div>
+	            <div class="introduce_right">
+	                <div class="introduce_in bg2">
+	                    <h3 class="font20">{{mainData.title}}</h3>
+	                    <p>{{mainData.description}}</p>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<div class="head bg1">
+	    <div class="title_box">
+	        <h2 class="color1"><span>负责人</span></h2>
+	    </div>
+	    <div class="contain head_cont" style="padding:0">
+	        <div class="head_item" v-for="item in principalData">
+	            <img :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" />
+	            <div class="head_bottom">
+	                <p class="font18">{{item.title}}</p>
+	                <p class="font6 color6">副教授、副院长</p>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<div class="advanced">
+	    <div class="title_box">
+	        <h2 class="color1"><span>先进典型</span></h2>
+	    </div>
+	    <div class="contain" style="padding:0">
+	        <div class="advance_cont" v-for="item in modelData">
+	            <a @click="intoDetail(item.id)">
+	                <div class="advance_left">
+	                    <img :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" />
+	                </div>
+	                <div class="advance_right">
+	                    <h3 class="color2">{{item.title}}</h3>
+	                    <p class="font16 color6">{{item.description}}</p>
+	                </div>
+	            </a>
+	        </div>
+	    </div>
+	</div>
 </div>
 <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript " src="js/bootstrap.js"></script>
 <script src="js/jquery.waypoints.min.js"></script>
 <script src="js/my.js"></script>
 <script src="js/rem.js"></script>
-<script type="text/babel">
+<script type="text/javascript">
 var app = new Vue({
     el: '#app',
-    data: function() {
+   
+        data: function() {
         return {
             is_toggle:false,
+            sliderData:[],
+            mainData:{},
+            principalData:[],
+            modelData:[],
+            paginate: {
+                
+                count: 0,
+                currentPage: 1,
+                pagesize: 6,
+                is_page: true,
+            },
+
+            searchItem:{
+                
+            },
+            pageArray:[],
+            allPages:0,
+            linkPage:'',
+
         }
+
     },
+
     created: function () {
-      
+      	this.getMainData();
+      	this.getPrincipalData();
+      	this.getModelData();
+      	this.getSliderData()
     },
+
     methods:{
+
+
+
+    	getMainData(){
+		    const  self =this;
+		    const postData={};
+		    postData.searchItem = {
+		      thirdapp_id:2
+		    };
+		    postData.getBefore = {
+			    caseData:{
+			        tableName:'Label',
+			        searchItem:{
+			          title:['=',['支部简介']],
+			        },
+			        middleKey:'menu_id',
+			        key:'id',
+			        condition:'in',
+			    },
+		    };
+		    const callback =(res)=>{
+		      if(res.info.data.length>0){
+		        self.mainData = res.info.data[0]
+		      }else{
+		        alert('数据错误')
+		      };
+		      console.log('self.mainData',self.mainData)
+		    };
+		    window.base.articleGet(postData,callback);
+		},
+
+
+		getSliderData(){
+		    const self = this;
+		    const postData = {};
+		    postData.searchItem = {
+		      thirdapp_id:2
+		    };
+		    postData.getBefore = {
+			    caseData:{
+			        tableName:'Label',
+			        searchItem:{
+			          title:['=',['首页轮播']],
+			        },
+			        middleKey:'parentid',
+			        key:'id',
+			        condition:'in',
+			    },
+		    };
+		    const callback = (res)=>{ 
+		      console.log(1000,res);
+		      if(res.info.data.length>0){
+		       self.sliderData.push.apply(self.sliderData,res.info.data)
+		      }
+		    };
+		    window.base.labelGet(postData,callback);
+		},
+
+		getPrincipalData(){
+		    const  self =this;
+		    const postData={};
+		    postData.paginate = window.base.cloneForm(self.paginate);
+		    postData.searchItem = {
+		      thirdapp_id:2
+		    };
+		    postData.getBefore = {
+			    caseData:{
+			        tableName:'Label',
+			        searchItem:{
+			          title:['=',['支部负责人']],
+			        },
+			        middleKey:'menu_id',
+			        key:'id',
+			        condition:'in',
+			    },
+		    };
+		    const callback =(res)=>{
+		      if(res.info.data.length>0){
+		        self.principalData.push.apply(self.principalData,res.info.data)
+		      }else{
+		        alert('没有更多了')
+		      };
+		    };
+		    window.base.articleGet(postData,callback);
+		},
+
+ 		
+		getModelData(){
+		    const  self =this;
+		    const postData={};
+		    postData.paginate = window.base.cloneForm(self.paginate);
+		    postData.searchItem = {
+		      thirdapp_id:2
+		    };
+		    postData.getBefore = {
+			    caseData:{
+			        tableName:'Label',
+			        searchItem:{
+			          title:['=',['先进典型']],
+			        },
+			        middleKey:'menu_id',
+			        key:'id',
+			        condition:'in',
+			    },
+		    };
+		    const callback =(res)=>{
+		      if(res.info.data.length>0){
+		        self.modelData.push.apply(self.modelData,res.info.data)
+		      }else{
+		        alert('没有更多了')
+		      };
+		    };
+		    window.base.articleGet(postData,callback);
+		},
+
+		intoDetail(id){
+            const self = this;
+            window.location.href = 'detail.html?id='+id;
+        },
+
         toggleMenu:function(e){
             var self = this;
             self.is_toggle = !self.is_toggle;
         },
+
         consult:function(e){
             var self = this;
             self.is_show = !self.is_show;
         },
+
         mask:function(e){
             var self = this;
             self.is_show = false;
         },
-         enter: function(e) {
+
+        enter: function(e) {
             var self = this;
             self.is_show1 = true;                             
             console.log(self.is_show1);             
         },
+
         leave: function(e) {
             var self = this;
             self.is_show1 = false;                             

@@ -48,8 +48,8 @@
                    <li><a href="index.html">工作室风采</a></li>
                     <li><a href="news.html">新闻动态</a></li>
                     <li><a href="organization.html">组织活动</a></li>
-                    <li><a href="member.html" class="active">党员管理</a></li>
-                    <li><a href="member_manager.html">党员管理员</a></li>
+                    <li><a href="login.html">党员管理</a></li>
+                    <li><a href="manerger_login.html">党员管理员</a></li>
                 </ul>
              </div>
              <div class="navigation_right orgin" :class="(is_toggle?'after':'')" id="phone">
@@ -57,8 +57,8 @@
                     <li><a href="index.html">工作室风采</a></li>
                     <li><a href="news.html">新闻动态</a></li>
                     <li><a href="organization.html">组织活动</a></li>
-                    <li><a href="member.html" class="active">党员管理</a></li>
-                    <li><a href="member_manager.html">党员管理员</a></li>
+                    <li><a href="login.html">党员管理</a></li>
+                    <li><a href="manerger_login.html">党员管理员</a></li>
                 </ul>
              </div>
           </div>  
@@ -82,8 +82,8 @@
                     <div class="font18 color sort">
                         <a href="member_meeting.html" class="active">会议通知</a>
                           <ul>
-                            <li class="font16 color6" :style="is_read == '最近通知'?'border:solid 1px #b02923':''" data-text="最近通知" @click="read">最近通知</li>
-                            <li class="font16 color6" :style="is_read == '最新通知'?'border:solid 1px #b02923':''" data-text="最新通知" @click="read">最新通知</li>
+                            <li class="font16 color6" :style="is_read == '0'?'border:solid 1px #b02923':''"  @click="tab(0)">最新通知</li>
+                            <li class="font16 color6" :style="is_read == '1'?'border:solid 1px #b02923':''"  @click="tab(1)">历史通知</li>
                         </ul>
                     </div>
                     <div class="font18 color sort">
@@ -95,38 +95,57 @@
                 </div>
             </div>
             <div class="member_right">
-                <div :style="is_read == '最近通知'?'display:block':'display:none'">
-                    <div class="message_list bg1" style="height:2.6rem;">
+                <div :style="is_read == '0'?'display:block':'display:none'">
+                    <div class="message_list bg1" style="height:2.6rem;" v-for="item in mainData">
                         <div  class="message_left">
-                            <h3 class="font20 color2">标题标题标题标题标题标题标题标题</h3>
-                            <p class="font16 color6">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内容内容内容容内容内容内容内容</p>
-                            <span class="color9 font14">2018-09-19</span>
+                            <h3 class="font20 color2">{{item.title}}</h3>
+                            <p class="font16 color6">{{item.description}}</p>
+                            <span class="color9 font14">{{item.create_time}}</span>
                         </div>
                         <div class="message_right">
-                            <img src="images/img2.jpg"/>
+                            <img :src="item.mainImg[0].url"/>
                         </div>
-                        <div class="join">
-                            <button class="font16 color1 bg">确认参加</button>
-                            <a href="member_meeting_submit.html" class="font16 color1 bg">无法参加</a>
+                        <div class="join" :style="item.message.length==0?'display:block':'display:none'">
+                            <button class="font16 color1 bg" @click="messageAdd(item.id)">确认参加</button>
+                            <a  @click="intoSubmit(item.id)" class="font16 color1 bg">无法参加</a>
+                        </div>
+                        <div class="join" :style="item.message&&item.message.length>0?'display:block':'display:none'">
+                            <button class="font16 color1 bg" v-if="item.message&&item.message[0]&&item.message[0].score==1" @click="messageUpdate(item.message[0].id)">签到</button>
+                        </div>
+                        <div class="join" :style="item.message&&item.message.length>0?'display:block':'display:none'">
+                            <button class="font16 color1 bg" v-if="item.message&&item.message[0]&&item.message[0].score==2">已签到</button>             
+                        </div>
+                        <div class="join" :style="item.message&&item.message.length>0?'display:block':'display:none'">
+                            <button class="font16 color1 bg" v-if="item.message&&item.message[0]&&item.message[0].score==3">已核销</button>
                         </div>
                     </div>
                 </div>
-                 <div :style="is_read == '最新通知'?'display:block':'display:none'">
-                    <div class="message_list bg1"  style="height:2.6rem;">
+                <div :style="is_read == '1'?'display:block':'display:none'">
+					<div class="message_list bg1" style="height:2.6rem;" v-for="item in mainData">
                         <div  class="message_left">
-                            <h3 class="font20 color2">标题标题标题标题标题标题标题标题</h3>
-                            <p class="font16 color6">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内 不然内容内容内容内容内容让女人内容内容内容内容内容内容让女人内容内容内容内容内容内容内容内容容内容内容内容内容</p>
-                            <span class="color9 font14">2018-09-19</span>
+                            <h3 class="font20 color2">{{item.title}}</h3>
+                            <p class="font16 color6">{{item.description}}</p>
+                            <span class="color9 font14">{{item.create_time}}</span>
                         </div>
                         <div class="message_right">
-                            <img src="images/img2.jpg"/>
+                            <img :src="item.mainImg[0].url"/>
                         </div>
-                        <div class="join">
-                            <button class="font16 color1 bg">确认参加</button>
-                            <a href="member_meeting_submit.html" class="font16 color1 bg">无法参加</a>
+                      	<div class="join" :style="item.message.length==0?'display:block':'display:none'">
+                            <button class="font16 color1 bg" @click="messageAdd(item.id)">确认参加</button>
+                            <a  @click="intoSubmit(item.id)" class="font16 color1 bg">无法参加</a>
+                        </div>
+                        <div class="join" :style="item.message&&item.message.length>0?'display:block':'display:none'">
+                            <button class="font16 color1 bg" v-if="item.message&&item.message[0]&&item.message[0].score==1" @click="messageUpdate(item.message[0].id)">签到</button>
+                        </div>
+                        <div class="join" :style="item.message&&item.message.length>0?'display:block':'display:none'">
+                            <button class="font16 color1 bg" v-if="item.message&&item.message[0]&&item.message[0].score==2">已签到</button>             
+                        </div>
+                        <div class="join" :style="item.message&&item.message.length>0?'display:block':'display:none'">
+                            <button class="font16 color1 bg" v-if="item.message&&item.message[0]&&item.message[0].score==3">已核销</button>
                         </div>
                     </div>
-                </div> 
+                </div>
+            </div> 
         </div>
     </div>
 </div>
@@ -142,36 +161,149 @@ var app = new Vue({
         return {
             is_toggle:false,
             is_menu:0,
-            is_read:'最近通知',
+            is_read:0,
             menuShow:false,
+            searchItem:{
+		    	create_time:['>',new Date(new Date().toLocaleDateString()).getTime()/1000]
+		   	},
+		   	paginate:{
+                count: 0,
+                currentPage: 1,
+                pagesize: 6,
+                is_page: true,
+            },
+           	submitData:{
+		        type:1,
+		        class:2,
+		        score:1
+		    },
+			mainData:[],
+			getBefore:{
+		      caseData:{
+		        tableName:'Label',
+		        searchItem:{
+		          title:['=',['会议通知']],
+		        },
+		        middleKey:'menu_id',
+		        key:'id',
+		        condition:'in',
+		      },
+		    },
         }
     },
     created: function () {
-      
+      	this.getMainData()
     },
     methods:{
+
+    	getMainData(isNew){
+		    const  self =this;
+		    if(isNew){
+		      	self.mainData = [];
+	            self.paginate = {
+	                count: 0,
+	                currentPage: 1,
+	                pagesize: 6,
+	                is_page: true,
+	            }
+		    };
+		    const postData={};
+		    postData.paginate = window.base.cloneForm(self.paginate);
+		    postData.searchItem = window.base.cloneForm(self.searchItem);
+		    postData.getBefore = window.base.cloneForm(self.getBefore);
+	        postData.getAfter = {
+		      message:{
+		        tableName:'Message',
+		        middleKey:'id',
+		        key:'relation_id',
+		        searchItem:{
+		          status:1
+		        },
+		        condition:'='
+		      }
+		    };
+		    const callback =(res)=>{
+		      if(res.info.data.length>0){
+		        self.mainData.push.apply(self.mainData,res.info.data);
+		    
+		      }else{
+		        self.isLoadAll = true;
+		        alert('没有更多了');
+		      };
+		    };
+		    window.base.articleGet(postData,callback);
+		},
+
+
+
+		messageAdd(id){
+		    const self = this;
+		    const postData = {};
+		    postData.token = localStorage.getItem('token');
+		    postData.data = {};
+		    postData.data = window.base.cloneForm(self.submitData);
+		    postData.data.relation_id = id;
+		    const callback = (res)=>{
+		      if(res.solely_code==100000){
+		        alert('确认参加');
+		        setTimeout(function(){
+		          self.getMainData(true)
+		        },1000);
+		      }; 
+		    };
+		    window.base.messageAdd(postData,callback);
+		},
+
+		messageUpdate(id){
+		    const self = this;
+		    const postData = {};
+		    postData.token = localStorage.getItem('token');
+		    postData.searchItem={
+		      id:id
+		    };
+		    postData.data = {
+		      score:2,
+		      sign_time:new Date(new Date().toLocaleDateString()).getTime()
+		    };
+
+		    const callback = (res)=>{
+		      if(res.solely_code==100000){
+		        alert('签到成功');
+		        setTimeout(function(){
+		          self.getMainData(true)
+		        },1000);
+		      }else{
+		      	alert(res.msg);
+		      }
+		    };
+		    window.base.messageUpdate(postData,callback);
+		},
+
+
+		tab(id){
+		    const self = this;
+		    var time = new Date(new Date().toLocaleDateString()).getTime()/1000;
+		    console.log('time',time);
+		    self.is_read=id;
+		     console.log('self.is_read',self.is_read);
+		    if(self.is_read==0){
+		      self.searchItem.create_time = ['>',time]
+		    }else if(self.is_read==1){
+		      self.searchItem.create_time = ['<',time]
+		    };
+		    self.getMainData(true);
+		},
+
         toggleMenu:function(e){
             var self = this;
             self.is_toggle = !self.is_toggle;
         },
-        gender(e){
+      	
+      	intoSubmit(id){
             const self = this;
-            var dataSet = window.base.getDataSet(e);
-            self.submitData.userGender = dataSet.text;
-            console.log(909,self.submitData.userGender);
+            window.location.href = 'member_meeting_submit.html?id='+id;
         },
-        read(e){
-            const self = this;
-            var dataSet = window.base.getDataSet(e);
-            self.is_read = dataSet.text;
-            self.is_attend = false;
-            console.log('is_read',self.is_read);
-        },
-        report(e){
-            const self = this;
-            var dataSet = window.base.getDataSet(e);
-            self.is_report = dataSet.text;
-        },
+      
         menu_show(id){
             const self = this;
             var index = id;
@@ -179,15 +311,8 @@ var app = new Vue({
             self.menuShow = !self.menuShow;
             console.log('menuShow',self.menuShow);
         },
-        attend(){
-            const self = this;
-            self.is_attend = true;
-        },
-        submit(){
-            const self = this;
-            self.is_menu = 999;
-            console.log('is_menu',self.is_menu);
-        }
+        
+        
     }
 });
 </script>
