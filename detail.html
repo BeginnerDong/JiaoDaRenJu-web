@@ -68,8 +68,10 @@
     <div style="width:100%;height:0.9rem;"></div>
     <div class="detail">
         <div class="contain">
-            <p class="font20 color2 title">{{mainData.title}}</p>
-            <span class="font16 color">{{mainData.create_time}}</span>
+            <div style="margin-bottom: 1rem;">
+                <p class="font20 color2 title">{{mainData.title}}</p>
+                <span class="font16 color">{{mainData.create_time}}</span>
+            </div>
             <div class="detail_cont">
                 <div class="font16 color6" v-html=" mainData.content"></div>
                 

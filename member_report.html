@@ -100,7 +100,7 @@
             </div>
             
             <div class="member_right" :style="is_menu == 999?'display:none':'display:block'">
-                <div>
+                <div class="min-height">
                     <div class="message_list bg1" style="height:2.6rem;" v-for="item in mainData">
 
                         <div  class="message_left" style="width:100%">
@@ -116,10 +116,7 @@
                         </div>
                     </div>
                 </div>
-                 
-
-            </div>
-             <div class="fenye">
+                 <div class="fenye">
                     <span>
                         共{{allPages}}页
                     </span>
@@ -133,7 +130,9 @@
                         跳转至：
                         <input style="border:1px solid black;" :data-page="linkPage" v-model="linkPage" @blur="linkTo" />
                     </span>
-                </div>
+            </div>
+
+            </div>
         </div>
     </div>
 </div>

@@ -174,7 +174,7 @@ var app = new Vue({
 		      if(res.info.data.length>0){
 		        self.mainData.push.apply(self.mainData,res.info.data);
 		        for (var i = 0; i < self.mainData.length; i++) {
-		       		self.mainData[i].start_time = window.base.shortString(self.mainData[i].start_time,16)	
+		       		self.mainData[i].start_time = self.timestampToTime(self.mainData[i].start_time)	
 		       	};
 		      }else{
 		        self.isLoadAll = true;
@@ -221,6 +221,37 @@ var app = new Vue({
 		    };
 		    window.base.labelGet(postData,callback);
 		},
+
+      timestampToTime(timestamp) {
+        const self = this;
+        console.log(timestamp)
+        var timestamp = parseInt(timestamp);
+        
+        var format = new Date(timestamp).getFullYear()+'-';
+        if(new Date(timestamp).getMonth()<10){
+          var format = format + '0' + (new Date(timestamp).getMonth()+1)+'-';
+        }else{
+          var format = format +  (new Date(timestamp).getMonth()+1)+'-';
+        }
+        if(new Date(timestamp).getDate()<10){
+          var format = format + '0' + new Date(timestamp).getDate()+'  ';
+        }else{
+          var format = format +  new Date(timestamp).getDate()+'  ';
+        }
+        if(new Date(timestamp).getHours()<10){
+          var format = format + '0' + new Date(timestamp).getHours();
+        }else{
+          var format = format +  new Date(timestamp).getHours();
+        }
+        if(new Date(timestamp).getMinutes()<10){
+          var format = format + ':' + '0' + new Date(timestamp).getMinutes();
+        }else{
+          var format = format + ':' + new Date(timestamp).getMinutes();
+        }
+
+        return format;
+
+    },
 
 		intoSubmit(id){
             const self = this;

@@ -108,7 +108,7 @@
                         </div>
                     </div>
                 </div>-->
-                 <div>
+                 <div v-if="is_blank">
                     <div class="message_list bg1" v-for="item in mainData" @click="relationAdd(item.id)"> 
                         <div  class="message_left" >
                             <h3 class="font20 color2">{{item.title}}</h3>
@@ -120,7 +120,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="fenye">
+                <div else>
+                    <div  class="blank">
+                        <img src="images/img.png" />
+                    </div>
+                </div>
+                <div class="fenye" >
                     <span>
                         共{{allPages}}页
                     </span>
@@ -153,6 +158,7 @@ var app = new Vue({
             is_menu:0,
             is_attend:false,
             menuShow:false,
+            is_blank:false,
             linkPage:[],
             pageArray: [],
             allPages: 0,
@@ -203,16 +209,13 @@ var app = new Vue({
 		    postData.getBefore = window.base.cloneForm(self.getBefore);
 			
 		    const callback =(res)=>{
-		    	
 		      if(res.info.data.length>0){
-		      	
 		        self.mainData.push.apply(self.mainData,res.info.data);
 		        self.paginate['count'] = res.info.total;
                 window.base.computePageArr(self);
-
 		      }else{
 		        self.isLoadAll = true;
-		        alert('没有更多了')
+		        self.is_blank = true;
 		      };
 		    };
 		    window.base.articleGet(postData,callback);

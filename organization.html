@@ -81,7 +81,7 @@
 <div class="advanced organization">
     <div class="contain" style="padding:0">
         <div class="advance_cont" v-for="item in mainData">
-            <a @click="intoDetail(item.id)">
+            <div @click="intoDetail(item.id)">
                 <div class="advance_left">
                     <img :src="item.mainImg?item.mainImg[0].url:''" />
                 </div>
@@ -91,7 +91,7 @@
                 </div>
                 <div class="organization_time font16 color9">{{item.create_time}}</div>
             </div>
-        </a>
+        </div>
     </div>
 </div>
 </div>

@@ -102,7 +102,7 @@
 	        <h2 class="color1"><span>负责人</span></h2>
 	    </div>
 	    <div class="contain head_cont" style="padding:0">
-	        <div class="head_item" v-for="item in principalData">
+	        <div class="head_item" :class="is_scale==index?'head_big':''" v-for="(item,index) in principalData" @mouseover="menuShow(index)">
 	            <img :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" />
 	            <div class="head_bottom">
 	                <p class="font18">{{item.title}}</p>
@@ -117,7 +117,7 @@
 	    </div>
 	    <div class="contain" style="padding:0">
 	        <div class="advance_cont" v-for="item in modelData">
-	            <a @click="intoDetail(item.id)">
+	            <div @click="intoDetail(item.id)">
 	                <div class="advance_left">
 	                    <img :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" />
 	                </div>
@@ -125,7 +125,7 @@
 	                    <h3 class="color2">{{item.title}}</h3>
 	                    <p class="font16 color6">{{item.description}}</p>
 	                </div>
-	            </a>
+	            </div>
 	        </div>
 	    </div>
 	</div>
@@ -146,6 +146,7 @@ var app = new Vue({
             mainData:{},
             principalData:[],
             modelData:[],
+            is_scale:2,
             paginate: {
                 
                 count: 0,
@@ -287,7 +288,12 @@ var app = new Vue({
 		    };
 		    window.base.articleGet(postData,callback);
 		},
-
+		menuShow: function(id) {
+            const self =this;
+            var currentId = id;
+              self.is_scale = currentId;  
+               console.log('head_big',self.is_scale)
+        },
 		intoDetail(id){
             const self = this;
             window.location.href = 'detail.html?id='+id;
@@ -322,64 +328,5 @@ var app = new Vue({
     }
 });
 </script>
-<script type="text/javascript">
- $(window).load(function() {
-    $('.xwSmall').waypoint(function(direction) {
-       if (direction === 'down' && !$(this.element).hasClass('animated')) {
-            $('.xwSmall').addClass('fadeInUp animated');
-        }   
-    }, {
-        offset: '800px'
-    });
-
-    $('.wxSmallMarket').waypoint(function(direction) {
-       if (direction === 'down' && !$(this.element).hasClass('animated')) {
-            $('.wxSmallMarket').addClass('fadeInUp animated');
-        }   
-    }, {
-        offset: '600px'
-    });
-    $('.need_sort').waypoint(function(direction) {
-       if (direction === 'down' && !$(this.element).hasClass('animated')) {
-            $('.fade_leftTop').addClass('fadeInLeftTop animated'); 
-            $('.fade_rightTop').addClass('fadeInRightTop animated');
-            $('.fade_leftBottom').addClass('fadeInLeftBottom animated');
-            $('.fade_rightBottom').addClass('fadeInRightBottom animated');
-            $('.fadein_top').addClass('fadeInUp animated');
-            $('.fadein_bottom').addClass('fadeInDown animated');
-        }   
-    }, {
-        offset: '600px'
-    });
-    $('.customize').waypoint(function(direction) {
-        if (direction === 'down' && !$(this.element).hasClass('animated')) {
-            $('.customize_img').addClass('clude animated');
-            $('.customize_detail').addClass('clude1 animated');
-        }
-    }, {
-        offset: '600px'
-
-    }); 
-     $('.wx_process').waypoint(function(direction) {
-        if (direction === 'down' && !$(this.element).hasClass('animated')) {
-            $('.process_first').each(function(k) {
-                var el = $(this);
-                setTimeout(function() {
-                    el.addClass('fadeInLeft  animated');
-                  //  el.removeClass('.animatedOpacity');
-                }, k * 100, 'easeInOutExpo');
-            });
-        }
-    }, {
-        offset: '600px'
-
-    });
-});
-</script>
-<script>
-    function back_top(){
-     document.body.scrollTop = document.documentElement.scrollTop = 0;
-     }
- </script>
 </body>
 </html>

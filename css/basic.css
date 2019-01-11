@@ -96,7 +96,7 @@ input,textarea {outline: none; -webkit-box-shadow: none; box-shadow: none;-webki
 	cursor: pointer;
 }
 .fenye a:hover,.fenye a.active{
-	background: #089fe3;
+	background: #eb3434;
 	color: #fff;
 }
 .font20{
@@ -131,4 +131,12 @@ input,textarea {outline: none; -webkit-box-shadow: none; box-shadow: none;-webki
 }
 .bg2{
 	background:#f5f5f5;
+}
+.blank{
+	text-align: center;
+}
+.blank img{
+	width:4rem;
+	height:3rem;
+	margin:1rem auto;
 }

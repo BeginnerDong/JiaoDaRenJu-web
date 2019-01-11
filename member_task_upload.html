@@ -90,35 +90,37 @@
                 </div>
             </div>
             <div class="member_right bg1">
-                <div class="upload_url" style="display:flex">
+                <div class="upload_url flex">
                     <img src="images/upload.jpg" />
-                    <input class="font16 color6" type="file" @change="uploadFile"  enctype="multipart/form-data" ></input>
-                    <p>上传文件</p>
+                    <div class="upload_right flex">
+                        <input class="font16 color6" type="file" @change="uploadFile"  enctype="multipart/form-data" ></input>
+                    </div>
                 </div>
                 <div class="textarea">
                     <textarea placeholder="编辑文案" v-model="submitData.content"></textarea>
                 </div>
                  <div class="upload" style="display:flex">
                     <div class="upload_item font16 color6" v-for="(item,index) in submitData.mainImg" >
-                    	<span @click="deleteImg(index)" style="width:20px">删除</span>
+                    	<div class="delete" @click="deleteImg(index)">
+                            <img src="images/close.png"/>
+                        </div>
                         <img :src="item.url" />
                         
                     </div>
-                </div>
-                <div class="upload">
                     <div class="upload_item font16 color6" v-if="isIos" >
                         <input placeholder="上传照片"  type="file" style="width:2rem;height:2rem;opacity: 0;z-index:99;border:0;" accept="image/*" 
-							 multiple  @change="uploadImg"/>
+                             multiple  @change="uploadImg"/>
                         <p>上传照片</p>
                     </div>
                     <div class="upload_item font16 color6" v-else >
                         <input placeholder="上传照片"  type="file" style="width:2rem;height:2rem;opacity: 0;z-index:99;border:0;" accept="image/*" 
-							 multiple  @change="uploadImg"/>
+                             multiple  @change="uploadImg"/>
                         <p>上传照片</p>
                     </div>
                 </div>
+                
                
-                    <button class="font16 color1 bg"  style="width:4rem;height:0.4rem;line-height:0.4rem;margin-top:1rem;margin-bottom: 0.5rem;" @click="messageUpdate" v-if="mainData.message&&mainData.message.length>0">
+                    <button class="font16 color1 bg"  style="width:4rem;height:0.4rem;line-height:0.4rem;margin-top:1rem;margin-bottom: 0.5rem;display:block;" @click="messageUpdate" v-if="mainData.message&&mainData.message.length>0">
                     	提交
                     </button>
                 
