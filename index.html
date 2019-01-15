@@ -101,15 +101,25 @@
 	    <div class="title_box">
 	        <h2 class="color1"><span>负责人</span></h2>
 	    </div>
-	    <div class="contain head_cont" style="padding:0">
-	        <div class="head_item" :class="is_scale==index?'head_big':''" v-for="(item,index) in principalData" @mouseover="menuShow(index)">
-	            <img :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" />
-	            <div class="head_bottom">
-	                <p class="font18">{{item.title}}</p>
-	                <p class="font6 color6">{{item.contactPhone}}</p>
-	                <p class="font6 color6">{{item.description}}</p>
-	            </div>
-	        </div>
+	    <div class="contain head_cont flex" @click="cooper_click(5,principalData,'minus')" style="padding:0">
+	    	<div class="click_btn"  style="text-align:left;">
+	    		<img src="images/left.png">
+	    	</div>
+	    	<div class="leader">
+	    		<transition-group  name="fade">
+			        <div class="head_item" v-for="(item,index) in principalData" :key="item.title">
+			            <img :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" />
+			            <div class="head_bottom">
+			                <p class="font18 avoidOverflow">{{item.title}}</p>
+			                <p class="font6 color6  avoidOverflow">{{item.contactPhone}}</p>
+			                <p class="font6 color6  avoidOverflow">{{item.description}}</p>
+			            </div>
+			        </div>
+			    </transition-group>
+		    </div>
+		    <div class="click_btn" @click="cooper_click(5,principalData,'add')" style="text-align:right;">
+		    	<img src="images/right.png">
+		    </div>
 	    </div>
 	</div>
 	<div class="advanced">
@@ -155,7 +165,7 @@ var app = new Vue({
                 pagesize: 6,
                 is_page: true,
             },
-
+            cooperStart:0,
             searchItem:{
                 
             },
@@ -168,16 +178,24 @@ var app = new Vue({
     },
 
     created: function () {
-      	this.getMainData();
-      	this.getPrincipalData();
-      	this.getModelData();
-      	this.getSliderData()
+    	const self = this;
+      	self.getMainData();
+      	self.getPrincipalData();
+      	self.getModelData();
+      	self.getSliderData();
+      	setInterval(function(){
+            self.cooper_click(5,self.principalData,'add')
+        }, 2000);
     },
 
     methods:{
-
-
-
+    	cooper_click(standard,array,type){
+    		console.log(999);
+            const self = this;
+            var res = window.base.jsTurn(self.cooperStart,standard,array,type);
+            self.principalData = res.array;
+            self.cooperStart = res.start;
+        },
     	getMainData(){
 		    const  self =this;
 		    const postData={};

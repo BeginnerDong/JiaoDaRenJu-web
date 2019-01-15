@@ -243,7 +243,19 @@ window.base={
         this.getData(allParams)
     },
 
-    
+    jsTurn:function(start,standard,array,type){
+        if(type=='add'){
+                start+=standard;
+            }else if(type=='minus'){
+                start-=standard;
+            };
+            if(start<0){
+               start = (Math.ceil(array.length/standard)-1)*standard; 
+            }else if(start>=array.length){
+                start=0;
+            };
+            return {array:array.slice(start,start+standard),start:start};
+    },
 
     cloneForm:function(form) {
         var res =  JSON.parse(JSON.stringify(form));   
