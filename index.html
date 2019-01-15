@@ -84,7 +84,7 @@
 	        <h2 class="color1"><span>工作室简介</span></h2>
 	    </div>
 	    <div class="contain"  style="padding:0">
-	        <div class="introduce_cont bg1">
+	        <div class="introduce_cont bg1" @click="intoDetail(mainData.id)">
 	            <div class="introduce_left">
 	                <img :src="mainData.mainImg?mainData.mainImg[0].url:''">
 	            </div>
@@ -106,7 +106,8 @@
 	            <img :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" />
 	            <div class="head_bottom">
 	                <p class="font18">{{item.title}}</p>
-	                <p class="font6 color6">副教授、副院长</p>
+	                <p class="font6 color6">{{item.contactPhone}}</p>
+	                <p class="font6 color6">{{item.description}}</p>
 	            </div>
 	        </div>
 	    </div>
