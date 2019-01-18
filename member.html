@@ -45,7 +45,7 @@
              </div>
              <div class="navigation_right" id="computer">
                  <ul class="navigate">
-                   <li><a href="index.html">工作室风采</a></li>
+                   <li><a href="index.html">支部风采</a></li>
                     <li><a href="news.html">新闻动态</a></li>
                     <li><a href="organization.html">组织活动</a></li>
                     <li><a href="login.html" class="active">党员管理</a></li>
@@ -54,7 +54,7 @@
              </div>
              <div class="navigation_right orgin" :class="(is_toggle?'after':'')" id="phone">
                  <ul class="navigate">
-                    <li><a href="index.html">工作室风采</a></li>
+                    <li><a href="index.html">支部风采</a></li>
                     <li><a href="news.html">新闻动态</a></li>
                     <li><a href="organization.html">组织活动</a></li>
                     <li><a href="login.html" class="active">党员管理</a></li>
@@ -156,7 +156,7 @@
                         <input type="date"  style="height:0.4rem;margin-top:0.2rem;" v-model="sForm.address"/>
                     </div>
                 </div>
-                <button class="bg color1 font20" v-on:click="submit">确认修改</button>
+                <button class="bg color1 font20" v-on:click="submit" style="margin-top:1rem;">确认修改</button>
             </div>
         </div>
     </div>
@@ -174,7 +174,7 @@ var app = new Vue({
             is_toggle:false,
             is_menu:0,
             menuShow:false,
-           
+            sliderData:[],
              sForm:{
 		      name:'',
 		      phone:'',
@@ -193,7 +193,6 @@ var app = new Vue({
       this.getSliderData();
     },
     methods:{
-
     	userInfoGet(){
 		    const self = this;
 		    const postData = {};

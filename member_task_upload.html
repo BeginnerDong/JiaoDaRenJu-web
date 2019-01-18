@@ -38,19 +38,19 @@
              </div>
              <div class="navigation_right" id="computer">
                  <ul class="navigate">
-                   <li><a href="index.html">工作室风采</a></li>
+                   <li><a href="index.html">支部风采</a></li>
                     <li><a href="news.html">新闻动态</a></li>
                     <li><a href="organization.html">组织活动</a></li>
-                    <li><a href="login.html">党员管理</a></li>
+                    <li><a class="active" href="login.html">党员管理</a></li>
                     <li><a href="manerger_login.html">党员管理员</a></li>
                 </ul>
              </div>
              <div class="navigation_right orgin" :class="(is_toggle?'after':'')" id="phone">
                  <ul class="navigate">
-                    <li><a href="index.html">工作室风采</a></li>
+                    <li><a href="index.html">支部风采</a></li>
                     <li><a href="news.html">新闻动态</a></li>
                     <li><a href="organization.html">组织活动</a></li>
-                    <li><a href="login.html">党员管理</a></li>
+                    <li"><a href="login.html" class="active">党员管理</a></li>
                     <li><a href="manerger_login.html">党员管理员</a></li>
                 </ul>
              </div>
@@ -129,12 +129,12 @@
                 </div>
                 
                
-                    <button class="font16 color1 bg"  style="width:4rem;height:0.4rem;line-height:0.4rem;margin-top:1rem;margin-bottom: 0.5rem;display:block;" @click="messageUpdate" v-if="mainData.message&&mainData.message.length>0">
-                    	提交
+                    <button class="font16 color1 bg"  style="width:4rem;height:0.4rem;line-height:0.4rem;margin:0.6rem auto;display:block;" @click="messageUpdate" v-if="mainData.message&&mainData.message.length>0">
+                    	修改
                     </button>
                 
                  
-                    <button class="font16 color1 bg"  style="width:4rem;height:0.4rem;line-height:0.4rem;margin-top:1rem;margin-bottom: 0.5rem;" @click="messageAdd" v-else>
+                    <button class="font16 color1 bg"  style="width:4rem;height:0.4rem;line-height:0.4rem;margin:0.6rem auto;display:block;" @click="messageAdd" v-else>
                     提交
                 	</button>
                 
@@ -148,7 +148,7 @@
 <script src="js/jquery.waypoints.min.js"></script>
 <script src="js/my.js"></script>
 <script src="js/rem.js"></script>
-<script type="text/javascript">
+<script type="text/babel">
 var app = new Vue({
     el: '#app',
     data: function() {
@@ -165,7 +165,7 @@ var app = new Vue({
 		        file:[],
 		        type:2,
 		    },
-		    isIos:false
+		    isIos:false,
 		    sliderData:[],
         }
     },
@@ -173,7 +173,7 @@ var app = new Vue({
       this.getMainData();
       this.getSliderData();
       var ua = navigator.userAgent.toLowerCase();
-	  self.isIos = (ua.indexOf('iphone') != -1) || (ua.indexOf('ipad') != -1);
+	  this.isIos = (ua.indexOf('iphone') != -1) || (ua.indexOf('ipad') != -1);
     },
 
     methods:{
@@ -218,7 +218,8 @@ var app = new Vue({
 		        middleKey:'id',
 		        key:'relation_id',
 		        searchItem:{
-		          status:1
+		          status:1,
+                  user_no:localStorage.getItem('user_no')
 		        },
 		        condition:'='
 		      }
@@ -286,7 +287,7 @@ var app = new Vue({
 		      	alert(res.msg)
 		      }
 		    };
-		    //window.base.messageUpdate(postData,callback);
+		    window.base.messageUpdate(postData,callback);
 		  },
 
 		

@@ -45,7 +45,7 @@
              </div>
              <div class="navigation_right" id="computer">
                  <ul class="navigate">
-                   <li><a href="index.html">工作室风采</a></li>
+                   <li><a href="index.html">支部风采</a></li>
                     <li><a href="news.html">新闻动态</a></li>
                     <li><a href="organization.html">组织活动</a></li>
                     <li><a href="login.html">党员管理</a></li>
@@ -54,7 +54,7 @@
              </div>
              <div class="navigation_right orgin" :class="(is_toggle?'after':'')" id="phone">
                  <ul class="navigate">
-                    <li><a href="index.html">工作室风采</a></li>
+                    <li><a href="index.html">支部风采</a></li>
                     <li><a href="news.html">新闻动态</a></li>
                     <li><a href="organization.html">组织活动</a></li>
                     <li><a href="login.html">党员管理</a></li>
@@ -222,7 +222,8 @@ var app = new Vue({
 		        middleKey:'id',
 		        key:'relation_id',
 		        searchItem:{
-		          status:1
+		          status:1,
+                  user_no:localStorage.getItem('user_no')
 		        },
 		        condition:'='
 		      }
@@ -268,7 +269,7 @@ var app = new Vue({
 		      }
 
 		    };
-		    //window.base.messageAdd(postData,callback);
+		    window.base.messageAdd(postData,callback);
 		  },
 
 		  
