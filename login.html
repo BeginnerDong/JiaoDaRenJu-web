@@ -79,7 +79,7 @@
                     <span>
                         <img src="images/password.png" />
                     </span>
-                    <input type="password" placeholder="请输入密码" v-model='submitData.password'/>
+                    <input type="password" placeholder="请输入密码" v-model='submitData.password' v-on:keyup.13="submit"/>
                 </div>
             </div>
             <a class="font18 color1 bg" v-on:click="submit">登录</a>
