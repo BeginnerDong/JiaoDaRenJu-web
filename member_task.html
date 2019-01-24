@@ -222,7 +222,7 @@ var app = new Vue({
            	paginate:{
                 count: 0,
                 currentPage: 1,
-                pagesize: 6,
+                pagesize: 3,
                 is_page: true,
             },
             searchItem:{
@@ -268,12 +268,7 @@ var app = new Vue({
 		    const  self =this;
 		    if(isNew){
 		        self.mainData = [];
-	            self.paginate = {
-	                count: 0,
-	                currentPage: 1,
-	                pagesize: 6,
-	                is_page: true,
-	            }
+
 		    };
 		    const postData={};
 		    postData.paginate = window.base.cloneForm(self.paginate);
@@ -351,31 +346,41 @@ var app = new Vue({
 
 		    }else if(num==1){
 		    	self.getBefore.relation={
-		            tableName:'Message',
+		          tableName:'Message',
 		        	searchItem:{
-	          	  		status:['in',[1]]
+		        	  status:['in',[1]]
 		        	},
+			        fixSearchItem:{
+			           user_no:['in',[localStorage.getItem('user_no')]]
+			        },
 		       	 	middleKey:'id',
 		        	key:'relation_id',
 		        	condition:'not in',	
 		    	}
+	  		      
 		  		      			   	    	
 		    }else if(num==2){
 		    	self.getBefore.relation={
-		            tableName:'Message',
+		          tableName:'Message',
 		        	searchItem:{
-	          	  		behavior:['in',[1]]
+		        	  behavior:['in',[1]]
 		        	},
+			        fixSearchItem:{
+			           user_no:['in',[localStorage.getItem('user_no')]]
+			        },
 		       	 	middleKey:'id',
 		        	key:'relation_id',
 		        	condition:'in',	
 		    	}
 		    }else if(num==3){
-		    	   	self.getBefore.relation={
-		            tableName:'Message',
+		    	self.getBefore.relation={
+		          tableName:'Message',
 		        	searchItem:{
-	          	  		behavior:['in',[2]]
+		        	  behavior:['in',[2]]
 		        	},
+			        fixSearchItem:{
+			           user_no:['in',[localStorage.getItem('user_no')]]
+			        },
 		       	 	middleKey:'id',
 		        	key:'relation_id',
 		        	condition:'in',	

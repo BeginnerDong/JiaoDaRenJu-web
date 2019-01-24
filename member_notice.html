@@ -125,15 +125,11 @@
                             <span class="color9 font14">{{item.create_time}}</span>
                         </div>
                         <div class="message_right">
-                            <img :src="item.mainImg&&item.mainImg[0].url"/>
+                            <img :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''"/>
                         </div>
                     </div>
                 </div>
-                <div else>
-                    <div  class="blank">
-                        <img src="images/img.png" />
-                    </div>
-                </div>
+             
                 <div class="fenye" >
                     <span>
                         共{{allPages}}页

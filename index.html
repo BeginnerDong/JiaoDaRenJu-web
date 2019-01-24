@@ -99,7 +99,7 @@
 	</div>
 	<div class="head bg1">
 	    <div class="title_box">
-	        <h2 class="color1"><span>负责人</span></h2>
+	        <h2 class="color1"><span>支部负责人</span></h2>
 	    </div>
 	    <div class="contain head_cont flex" @click="cooper_click(5,principalData,'minus')" style="padding:0">
 	    	<div class="click_btn"  style="text-align:left;">
@@ -190,7 +190,7 @@ var app = new Vue({
 
     methods:{
     	cooper_click(standard,array,type){
-    		console.log(999);
+    
             const self = this;
             var res = window.base.jsTurn(self.cooperStart,standard,array,type);
             self.principalData = res.array;

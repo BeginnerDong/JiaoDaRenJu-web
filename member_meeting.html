@@ -71,7 +71,7 @@
             </ol>
             <div class="carousel-inner" role="listbox" >
                 <div  class="item" v-for="(item,index) in sliderData" :class="index==0?'active':''">
-                  <img :src="item.mainImg?item.mainImg[0].url:''" class="img-responsive banner_img">
+                  <img :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" class="img-responsive banner_img">
                 </div>
             </div>  
         </div>
@@ -112,7 +112,7 @@
                             <span class="color9 font14">{{item.create_time}}</span>
                         </div>
                         <div class="message_right">
-                            <img :src="item.mainImg[0].url"/>
+                            <img :src="item.mainImg&&item.mainImg[0]&&item.mainImg[0].url?item.mainImg[0].url:''"/>
                         </div>
                         <div class="join" :style="item.message.length==0?'display:block':'display:none'">
                             <button class="font16 color1 bg" @click="messageAdd(item.id)">确认参加</button>
@@ -137,7 +137,7 @@
                             <span class="color9 font14">{{item.create_time}}</span>
                         </div>
                         <div class="message_right">
-                            <img :src="item.mainImg[0].url"/>
+                            <img :src="item.mainImg&&item.mainImg[0]&&item.mainImg[0].url?item.mainImg[0].url:''"/>
                         </div>
                       	<div class="join" :style="item.message.length==0?'display:block':'display:none'">
                             <button class="font16 color1 bg" @click="messageAdd(item.id)">确认参加</button>
