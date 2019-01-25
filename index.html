@@ -106,7 +106,7 @@
 	    		<img src="images/left.png">
 	    	</div>
 	    	<div class="leader">
-	    		<transition-group  name="fade">
+	    		<!-- <transition-group  name="fade"> -->
 			        <div class="head_item" v-for="(item,index) in web_principalData" :key="item.title">
 			            <img :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" />
 			            <div class="head_bottom">
@@ -115,7 +115,7 @@
 			                <p class="font6 color6  avoidOverflow">{{item.description}}</p>
 			            </div>
 			        </div>
-			    </transition-group>
+			    <!-- </transition-group> -->
 		    </div>
 		    <div class="click_btn" @click="cooper_click(5,principalData,'add')" style="text-align:right;">
 		    	<img src="images/right.png">
@@ -185,7 +185,7 @@ var app = new Vue({
       	self.getSliderData();
       	setInterval(function(){
             self.cooper_click(5,self.principalData,'add')
-        }, 2000);
+        }, 3000);
     },
 
     methods:{
