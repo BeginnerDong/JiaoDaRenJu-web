@@ -45,8 +45,8 @@
              </div>
              <div class="navigation_right" id="computer">
                  <ul class="navigate">
-                    <li><a href="index.html">支部风采</a></li>
-                    <li><a href="news.html" class="active">新闻动态</a></li>
+                    <li><a href="index.html">新闻动态</a></li>
+                    <li><a href="news.html" class="active">支部风采</a></li>
                     <li><a href="organization.html">组织活动</a></li>
                     <li><a href="login.html">党员管理</a></li>
                     <li><a href="manerger_login.html">党员管理员</a></li>
@@ -54,9 +54,9 @@
              </div>
              <div class="navigation_right orgin" :class="(is_toggle?'after':'')" id="phone">
                  <ul class="navigate">
-                   <li><a href="index.html">支部风采</a></li>
-                    <li><a href="news.html" class="active">新闻动态</a></li>
-                    <li><a href="organization.html">组织活动</a></li>
+                    <li><a href="index.html" class="active">支部风采</a></li>
+                    <li><a href="case.html">新闻动态</a></li>
+                    <li><a href="customize.html">组织活动</a></li>
                     <li><a href="login.html">党员管理</a></li>
                     <li><a href="manerger_login.html">党员管理员</a></li>
                 </ul>
@@ -77,62 +77,124 @@
             </div>  
         </div>
 	</div>
-<div style="width:100%;height:0.9rem;"></div>
+	<div style="width:100%;height:0.9rem;"></div>
 
-<div class="news">
-    <div class="contain"  style="padding:0">
-        <div class="news_cont">
-            <div class="news_left">
-                <img :src="mainData&&mainData[0]&&mainData[0].label&&mainData[0].label[mainData[0].menu_id].mainImg[0]?mainData[0].label[mainData[0].menu_id].mainImg[0].url:''">
-            </div>
-            <div class="news_right">
-                <div class="news_in" v-for="item in mainData">
-                    <a @click="intoDetail(item.id)">
-                        <h3 class="font20 color2">{{item.title}}</h3>
-                        <p class="color6">{{item.description}}</p>
-                    </a>
-                </div>
-       
-            </div>
-        </div>
-    </div>
-</div>
-<div class="other_news bg1">
-    <div class="contain" style="padding:0">
-        <div class="news_item" v-for="item in mainData">
-            <img :src="item.mainImg?item.mainImg[0].url:''"/>
-            <div class="news_in">
-                <h5 class="font20 color2">{{item.title}}</h5>
-                <p class="font16 color6">{{item.description}}</p>
-                <a class="font14 color2" @click="intoDetail(item.id)">了解更多 》</a>
-            </div>
-        </div>
-        
-    </div>
-</div>
+	<div class="introduce bg2">
+	    <div class="title_box">
+	        <h2 class="color1"><span>支部简介</span></h2>
+	    </div>
+	    <div class="contain"  style="padding:0">
+	        <div class="introduce_cont bg1" @click="intoDetail(mainData.id)">
+	            <div class="introduce_left">
+	                <img :src="mainData.mainImg?mainData.mainImg[0].url:''">
+	            </div>
+	            <div class="introduce_right">
+	                <div class="introduce_in bg2">
+	                    <h3 class="font20">{{mainData.title}}</h3>
+	                    <p>{{mainData.description}}</p>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<div class="head bg1">
+	    <div class="title_box">
+	        <h2 class="color1"><span>支部负责人</span></h2>
+	    </div>
+	    <div class="contain head_cont flex" @click="cooper_click(5,principalData,'minus')" style="padding:0">
+	    	<div class="click_btn"  style="text-align:left;">
+	    		<img src="images/left.png">
+	    	</div>
+	    	<div class="leader">
+	    		<!-- <transition-group  name="fade"> -->
+			        <div class="head_item" v-for="(item,index) in web_principalData" :key="item.title">
+			            <img :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" />
+			            <div class="head_bottom">
+			                <p class="font18 avoidOverflow">{{item.title}}</p>
+			                <p class="font6 color6  avoidOverflow">{{item.contactPhone}}</p>
+			                <p class="font6 color6  avoidOverflow">{{item.description}}</p>
+			            </div>
+			        </div>
+			    <!-- </transition-group> -->
+		    </div>
+		    <div class="click_btn" @click="cooper_click(5,principalData,'add')" style="text-align:right;">
+		    	<img src="images/right.png">
+		    </div>
+	    </div>
+	</div>
+	<div class="advanced">
+	    <div class="title_box">
+	        <h2 class="color1"><span>先进典型</span></h2>
+	    </div>
+	    <div class="contain" style="padding:0">
+	        <div class="advance_cont" v-for="item in modelData">
+	            <div @click="intoDetail(item.id)">
+	                <div class="advance_left">
+	                    <img :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" />
+	                </div>
+	                <div class="advance_right">
+	                    <h3 class="color2">{{item.title}}</h3>
+	                    <p class="font16 color6">{{item.description}}</p>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
 </div>
 <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript " src="js/bootstrap.js"></script>
 <script src="js/jquery.waypoints.min.js"></script>
 <script src="js/my.js"></script>
 <script src="js/rem.js"></script>
-<script type="text/babel">
+<script type="text/javascript">
 var app = new Vue({
     el: '#app',
-    data: function() {
+   
+        data: function() {
         return {
             is_toggle:false,
-            mainData:[],
-            sliderData:[]
+            sliderData:[],
+            mainData:{},
+            principalData:[],
+            modelData:[],
+            is_scale:2,
+            paginate: {
+                count: 0,
+                currentPage: 1,
+                pagesize: 6,
+                is_page: true,
+            },
+            cooperStart:0,
+            searchItem:{
+                
+            },
+            web_principalData:[],
+            pageArray:[],
+            allPages:0,
+            linkPage:'',
+
         }
+
     },
+
     created: function () {
-      	this.getMainData();
-      	this.getSliderData();
+    	const self = this;
+      	self.getMainData();
+      	self.getPrincipalData();
+      	self.getModelData();
+      	self.getSliderData();
+      	setInterval(function(){
+            self.cooper_click(5,self.principalData,'add')
+        }, 3000);
     },
 
     methods:{
-
+    	cooper_click(standard,array,type){
+            const self = this;
+            var res = window.base.jsTurn(self.cooperStart,standard,array,type);
+            self.web_principalData = res.array;
+            self.cooperStart = res.start;
+        },
     	getMainData(){
 		    const  self =this;
 		    const postData={};
@@ -143,7 +205,7 @@ var app = new Vue({
 			    caseData:{
 			        tableName:'Label',
 			        searchItem:{
-			          title:['=',['新闻动态']],
+			          title:['=',['支部简介']],
 			        },
 			        middleKey:'menu_id',
 			        key:'id',
@@ -152,7 +214,7 @@ var app = new Vue({
 		    };
 		    const callback =(res)=>{
 		      if(res.info.data.length>0){
-		        self.mainData.push.apply(self.mainData,res.info.data)
+		        self.mainData = res.info.data[0]
 		      }else{
 		        alert('数据错误')
 		      };
@@ -160,8 +222,6 @@ var app = new Vue({
 		    };
 		    window.base.articleGet(postData,callback);
 		},
-
-
 
 
 		getSliderData(){
@@ -174,7 +234,7 @@ var app = new Vue({
 			    caseData:{
 			        tableName:'Label',
 			        searchItem:{
-			          title:['=',['新闻动态轮播']],
+			          title:['=',['首页轮播']],
 			        },
 			        middleKey:'parentid',
 			        key:'id',
@@ -190,6 +250,68 @@ var app = new Vue({
 		    window.base.labelGet(postData,callback);
 		},
 
+		getPrincipalData(){
+		    const  self =this;
+		    const postData={};
+		    postData.paginate = window.base.cloneForm(self.paginate);
+		    postData.searchItem = {
+		      thirdapp_id:2
+		    };
+		    postData.getBefore = {
+			    caseData:{
+			        tableName:'Label',
+			        searchItem:{
+			          title:['=',['支部负责人']],
+			        },
+			        middleKey:'menu_id',
+			        key:'id',
+			        condition:'in',
+			    },
+		    };
+		    const callback =(res)=>{
+		      if(res.info.data.length>0){
+		        self.principalData.push.apply(self.principalData,res.info.data)
+		      }else{
+		        alert('没有更多了')
+		      };
+		    };
+		    window.base.articleGet(postData,callback);
+		},
+
+ 		
+		getModelData(){
+		    const  self =this;
+		    const postData={};
+		    postData.paginate = window.base.cloneForm(self.paginate);
+		    postData.searchItem = {
+		      thirdapp_id:2
+		    };
+		    postData.getBefore = {
+			    caseData:{
+			        tableName:'Label',
+			        searchItem:{
+			          title:['=',['先进典型']],
+			        },
+			        middleKey:'menu_id',
+			        key:'id',
+			        condition:'in',
+			    },
+		    };
+		    const callback =(res)=>{
+		      if(res.info.data.length>0){
+		        self.modelData.push.apply(self.modelData,res.info.data)
+		      }else{
+		        alert('没有更多了')
+		      };
+		    };
+		    window.base.articleGet(postData,callback);
+		},
+		menuShow: function(id) {
+            const self =this;
+            var currentId = id;
+              self.is_scale = currentId;  
+               console.log('head_big',self.is_scale)
+        },
 		intoDetail(id){
             const self = this;
             window.location.href = 'detail.html?id='+id;
@@ -199,19 +321,23 @@ var app = new Vue({
             var self = this;
             self.is_toggle = !self.is_toggle;
         },
+
         consult:function(e){
             var self = this;
             self.is_show = !self.is_show;
         },
+
         mask:function(e){
             var self = this;
             self.is_show = false;
         },
-         enter: function(e) {
+
+        enter: function(e) {
             var self = this;
             self.is_show1 = true;                             
             console.log(self.is_show1);             
         },
+
         leave: function(e) {
             var self = this;
             self.is_show1 = false;                             
@@ -220,64 +346,5 @@ var app = new Vue({
     }
 });
 </script>
-<script type="text/javascript">
- $(window).load(function() {
-    $('.xwSmall').waypoint(function(direction) {
-       if (direction === 'down' && !$(this.element).hasClass('animated')) {
-            $('.xwSmall').addClass('fadeInUp animated');
-        }   
-    }, {
-        offset: '800px'
-    });
-
-    $('.wxSmallMarket').waypoint(function(direction) {
-       if (direction === 'down' && !$(this.element).hasClass('animated')) {
-            $('.wxSmallMarket').addClass('fadeInUp animated');
-        }   
-    }, {
-        offset: '600px'
-    });
-    $('.need_sort').waypoint(function(direction) {
-       if (direction === 'down' && !$(this.element).hasClass('animated')) {
-            $('.fade_leftTop').addClass('fadeInLeftTop animated'); 
-            $('.fade_rightTop').addClass('fadeInRightTop animated');
-            $('.fade_leftBottom').addClass('fadeInLeftBottom animated');
-            $('.fade_rightBottom').addClass('fadeInRightBottom animated');
-            $('.fadein_top').addClass('fadeInUp animated');
-            $('.fadein_bottom').addClass('fadeInDown animated');
-        }   
-    }, {
-        offset: '600px'
-    });
-    $('.customize').waypoint(function(direction) {
-        if (direction === 'down' && !$(this.element).hasClass('animated')) {
-            $('.customize_img').addClass('clude animated');
-            $('.customize_detail').addClass('clude1 animated');
-        }
-    }, {
-        offset: '600px'
-
-    }); 
-     $('.wx_process').waypoint(function(direction) {
-        if (direction === 'down' && !$(this.element).hasClass('animated')) {
-            $('.process_first').each(function(k) {
-                var el = $(this);
-                setTimeout(function() {
-                    el.addClass('fadeInLeft  animated');
-                  //  el.removeClass('.animatedOpacity');
-                }, k * 100, 'easeInOutExpo');
-            });
-        }
-    }, {
-        offset: '600px'
-
-    });
-});
-</script>
-<script>
-    function back_top(){
-     document.body.scrollTop = document.documentElement.scrollTop = 0;
-     }
- </script>
 </body>
 </html>
