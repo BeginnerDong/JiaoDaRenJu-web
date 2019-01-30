@@ -178,13 +178,13 @@
             </div>
 
             <div class="upload_img flex">
-                 <div class="upload_item color2 font24 upload_img">
-                  <div  v-for="(item,index) in submitData.mainImg">
+                <div class="upload_item color2 font24 upload_img" v-for="(item,index) in submitData.mainImg">
+               
                         <div class="delete" @click="deleteImg(index)">
                             <img src="images/close.png" class="delete_close"/>
                         </div>
                         <img :src="item.url" class="upload_item color2 font24 upload_img"/>
-                    </div>
+        
                 </div>
                 <div class="upload_item1 color2 font24 " v-if="isIos">
                     <input placeholder="上传照片"  type="file" style="width:2rem;height:2rem;opacity: 0;z-index:99;border:0;" accept="image/*" 
